@@ -278,14 +278,608 @@ select option{background:var(--s2);color:var(--t)}
   h3 { font-size:16px; font-weight:600; }
   .sec-title { font-family:'Sora',sans-serif; font-weight:700; font-size:13px; }
   .track-title { font-family:'Sora',sans-serif; font-weight:700; }
+
+/* ====== NEW PLAYER DESIGN ====== */
+#player{
+  position:fixed;bottom:0;left:0;right:0;z-index:1000;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+}
+/* MINI BAR */
+.mini-player{
+  height:72px;display:flex;align-items:center;padding:0 16px;gap:12px;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(74,158,160,0.15);
+  box-shadow:0 -4px 30px rgba(74,158,160,0.12);
+}
+.mini-art{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,#4A9EA0,#7DAF8A);
+  flex-shrink:0;overflow:hidden;display:flex;align-items:center;
+  justify-content:center;font-size:20px;
+  box-shadow:0 4px 14px rgba(74,158,160,0.3);
+  cursor:pointer;
+}
+.mini-art img{width:100%;height:100%;object-fit:cover}
+.mini-info{flex:1;min-width:0;cursor:pointer}
+.mini-title{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#1A2332;font-family:'Sora',sans-serif}
+.mini-artist{font-size:11px;color:#7A8A98;margin-top:1px}
+.mini-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(74,158,160,0.15)}
+.mini-progress-fill{height:100%;background:linear-gradient(90deg,#4A9EA0,#7DAF8A);transition:width .5s linear}
+.mini-controls{display:flex;align-items:center;gap:4px}
+.ctrl-btn{
+  width:38px;height:38px;border-radius:50%;border:none;
+  background:none;color:#3D4F5E;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;transition:all .2s;
+}
+.ctrl-btn:hover{background:rgba(74,158,160,0.1);color:#4A9EA0}
+.ctrl-btn.play{
+  width:44px;height:44px;font-size:18px;
+  background:linear-gradient(135deg,#4A9EA0,#7DAF8A);
+  color:#fff;box-shadow:0 4px 16px rgba(74,158,160,0.4);
+}
+.ctrl-btn.play:hover{transform:scale(1.08);box-shadow:0 6px 22px rgba(74,158,160,0.5)}
+.ctrl-btn.active{color:#4A9EA0}
+
+/* FULL PLAYER */
+.full-player{
+  display:none;height:100%;flex-direction:column;align-items:center;
+  padding:0;overflow:hidden;position:relative;
+}
+#player.full .full-player{display:flex}
+#player.full .mini-player{display:none}
+#player.full{
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(255,255,255,0.98);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+}
+
+/* Full player header */
+.fp-header{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;
+}
+.fp-close{
+  width:36px;height:36px;border-radius:50%;border:none;
+  background:rgba(74,158,160,0.1);color:#4A9EA0;
+  cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.fp-close:hover{background:rgba(74,158,160,0.2)}
+.fp-queue-btn{
+  width:36px;height:36px;border-radius:50%;border:none;
+  background:rgba(74,158,160,0.1);color:#4A9EA0;
+  cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;
+}
+.fp-header-title{font-size:13px;font-weight:700;color:#7A8A98;letter-spacing:.08em;text-transform:uppercase}
+
+/* Artwork */
+.fp-art-wrap{
+  position:relative;margin:0 auto 24px;
+  width:min(280px,72vw);
+}
+.fp-art{
+  width:100%;aspect-ratio:1;border-radius:24px;
+  background:linear-gradient(135deg,#4A9EA0,#E8A44A,#7DAF8A);
+  display:flex;align-items:center;justify-content:center;font-size:80px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(74,158,160,0.35),0 8px 20px rgba(0,0,0,0.08);
+  transition:transform .3s ease;
+}
+.fp-art img{width:100%;height:100%;object-fit:cover}
+.fp-art.spinning{animation:spin-art 20s linear infinite}
+@keyframes spin-art{from{border-radius:24px}to{border-radius:24px}}
+.fp-art-glow{
+  position:absolute;inset:-20px;border-radius:40px;
+  background:linear-gradient(135deg,rgba(74,158,160,0.2),rgba(232,164,74,0.15),rgba(125,175,138,0.2));
+  filter:blur(24px);z-index:-1;
+  animation:glow-pulse 3s ease-in-out infinite alternate;
+}
+@keyframes glow-pulse{from{opacity:0.6}to{opacity:1}}
+
+/* Track info */
+.fp-info{text-align:center;padding:0 24px;margin-bottom:20px;width:100%}
+.fp-title{
+  font-size:22px;font-weight:800;color:#1A2332;
+  font-family:'Sora',sans-serif;margin-bottom:5px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.fp-artist{font-size:14px;color:#7A8A98;font-weight:500}
+.fp-like-inline{
+  width:32px;height:32px;border-radius:50%;border:none;
+  background:none;font-size:18px;cursor:pointer;transition:all .2s;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+}
+.fp-like-inline.liked{color:#C05840;animation:heart-pop .3s ease}
+@keyframes heart-pop{0%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-50%) scale(1.4)}100%{transform:translateY(-50%) scale(1)}}
+
+/* Progress */
+.fp-progress{width:100%;max-width:340px;padding:0 24px;margin-bottom:16px}
+.fp-bar{
+  height:5px;background:rgba(74,158,160,0.15);border-radius:10px;
+  cursor:pointer;position:relative;margin-bottom:8px;
+  transition:height .15s;
+}
+.fp-bar:hover{height:8px}
+.fp-fill{
+  height:100%;border-radius:10px;
+  background:linear-gradient(90deg,#4A9EA0,#7DAF8A);
+  position:relative;transition:width .1s linear;
+}
+.fp-fill::after{
+  content:'';position:absolute;right:-6px;top:50%;
+  transform:translateY(-50%);
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;border:3px solid #4A9EA0;
+  box-shadow:0 2px 8px rgba(74,158,160,0.4);
+  opacity:0;transition:opacity .15s;
+}
+.fp-bar:hover .fp-fill::after{opacity:1}
+.fp-times{display:flex;justify-content:space-between;font-size:11px;color:#7A8A98;font-weight:600;font-family:'Space Grotesk',monospace}
+
+/* Controls */
+.fp-controls{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:20px;padding:0 20px;
+}
+.fp-controls .ctrl-btn{width:44px;height:44px;font-size:18px;color:#3D4F5E}
+.fp-controls .ctrl-btn.play{
+  width:64px;height:64px;font-size:26px;
+  background:linear-gradient(135deg,#4A9EA0,#7DAF8A);
+  color:#fff;box-shadow:0 8px 28px rgba(74,158,160,0.45);
+  border-radius:50%;
+}
+.fp-controls .ctrl-btn.play:hover{transform:scale(1.06);box-shadow:0 12px 36px rgba(74,158,160,0.55)}
+
+/* Actions row */
+.fp-actions{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  margin-bottom:16px;padding:0 20px;
+}
+.fp-actions .ctrl-btn{width:40px;height:40px;font-size:16px;color:#7A8A98}
+.fp-actions .ctrl-btn:hover{color:#4A9EA0;background:rgba(74,158,160,0.1)}
+
+/* Waveform */
+.waveform{
+  display:flex;align-items:center;gap:2px;height:40px;
+  padding:0 24px;width:100%;max-width:340px;
+}
+.waveform-bar{
+  flex:1;border-radius:2px;min-height:4px;
+  background:rgba(74,158,160,0.2);
+  transition:background .1s;
+}
+.waveform-bar.played{background:linear-gradient(180deg,#4A9EA0,#7DAF8A)}
+.waveform-bar.current{background:#E8A44A;animation:wave-pulse .6s ease-in-out infinite alternate}
+@keyframes wave-pulse{from{opacity:0.7}to{opacity:1}}
+
+/* Volume */
+.fp-volume{
+  display:flex;align-items:center;gap:10px;
+  padding:0 24px;width:100%;max-width:340px;margin-top:8px;
+}
+.vol-icon{font-size:16px;color:#7A8A98;cursor:pointer}
+.vol-slider{
+  flex:1;height:4px;border-radius:2px;
+  background:rgba(74,158,160,0.15);
+  -webkit-appearance:none;outline:none;cursor:pointer;
+}
+.vol-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:#4A9EA0;box-shadow:0 2px 8px rgba(74,158,160,0.4);cursor:pointer;
+}
+
+/* ====== SPLASH SCREEN ====== */
+#splash{
+  position:fixed;inset:0;z-index:9999;display:flex;
+  align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 30% 40%, #0D2535 0%, #091820 40%, #050D12 100%);
+  overflow:hidden;
+}
+/* Animated background rings */
+#splash::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  border:1px solid rgba(74,158,160,0.08);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:ring-expand 4s ease-out infinite;
+}
+#splash::after{
+  content:'';position:absolute;
+  width:400px;height:400px;border-radius:50%;
+  border:1px solid rgba(138,191,204,0.12);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:ring-expand 4s ease-out infinite .8s;
+}
+@keyframes ring-expand{
+  0%{transform:translate(-50%,-50%) scale(0.3);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(2);opacity:0}
+}
+.sp-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+}
+/* Floating particles */
+.sp-particle{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:rgba(74,158,160,0.6);
+  animation:float-particle 6s ease-in-out infinite;
+}
+@keyframes float-particle{
+  0%,100%{transform:translateY(0) scale(1);opacity:0.6}
+  50%{transform:translateY(-30px) scale(1.4);opacity:1}
+}
+/* Sound wave rings behind logo */
+.sp-ring{
+  position:absolute;border-radius:50%;
+  border:1.5px solid rgba(74,158,160,0.2);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:sp-ring-pulse 2.4s ease-out infinite;
+}
+.sp-ring:nth-child(2){animation-delay:.4s;border-color:rgba(125,175,138,0.15)}
+.sp-ring:nth-child(3){animation-delay:.8s;border-color:rgba(138,191,204,0.12)}
+@keyframes sp-ring-pulse{
+  0%{width:100px;height:100px;opacity:0.8}
+  100%{width:340px;height:340px;opacity:0}
+}
+/* Logo container */
+.sp-logo-wrap{
+  position:relative;width:110px;height:110px;
+  margin-bottom:28px;
+}
+.sp-logo-bg{
+  position:absolute;inset:-12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(74,158,160,0.25),transparent 70%);
+  animation:logo-glow 2s ease-in-out infinite alternate;
+}
+@keyframes logo-glow{
+  from{transform:scale(0.95);opacity:0.7}
+  to{transform:scale(1.05);opacity:1}
+}
+.sp-logo{
+  width:110px;height:110px;border-radius:26px;
+  position:relative;z-index:1;
+  box-shadow:0 0 0 1px rgba(74,158,160,0.3),
+             0 20px 60px rgba(74,158,160,0.4),
+             0 8px 24px rgba(0,0,0,0.6);
+  animation:logo-breathe 3s ease-in-out infinite;
+}
+@keyframes logo-breathe{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-6px) scale(1.02)}
+}
+/* Title */
+.sp-title{
+  font-family:'Sora',sans-serif;
+  font-size:36px;font-weight:800;
+  background:linear-gradient(135deg,#FFFFFF 0%,#8ABFCC 50%,#4A9EA0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.5px;margin-bottom:8px;
+  animation:fade-up .8s ease both .3s;
+}
+.sp-sub{
+  font-size:11px;font-weight:700;letter-spacing:.25em;
+  color:rgba(138,191,204,0.7);
+  font-family:'Space Grotesk',monospace;
+  margin-bottom:40px;
+  animation:fade-up .8s ease both .5s;
+}
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+/* Loading bar */
+.sp-bar-wrap{
+  width:200px;position:relative;
+  animation:fade-up .8s ease both .7s;
+}
+.sp-bar{
+  height:3px;background:rgba(255,255,255,0.08);
+  border-radius:10px;overflow:hidden;margin-bottom:12px;
+}
+.sp-fill{
+  height:100%;border-radius:10px;width:0%;
+  background:linear-gradient(90deg,#4A9EA0,#7DAF8A,#E8A44A);
+  background-size:200% 100%;
+  animation:load-bar 2.5s ease forwards, shimmer 1.5s linear infinite;
+}
+@keyframes load-bar{
+  0%{width:0%}
+  60%{width:80%}
+  100%{width:100%}
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+.sp-loading-text{
+  text-align:center;font-size:10px;font-weight:600;
+  letter-spacing:.15em;color:rgba(138,191,204,0.5);
+  font-family:'Space Grotesk',monospace;
+  animation:blink-text 1.4s ease-in-out infinite;
+}
+@keyframes blink-text{
+  0%,100%{opacity:0.5}50%{opacity:1}
+}
+/* Music notes floating */
+.sp-note{
+  position:absolute;font-size:18px;
+  animation:note-float 5s ease-in-out infinite;
+  opacity:0.25;pointer-events:none;
+}
+@keyframes note-float{
+  0%{transform:translateY(0) rotate(0deg);opacity:0.25}
+  50%{transform:translateY(-40px) rotate(12deg);opacity:0.5}
+  100%{transform:translateY(0) rotate(0deg);opacity:0.25}
+}
+/* ====== AUTH SCREEN ====== */
+#auth{
+  position:fixed;inset:0;background:radial-gradient(ellipse at 30% 40%,#0D2535,#091820 50%,#050D12);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.auth-card{
+  width:min(400px,92vw);background:rgba(255,255,255,0.04);
+  border:1px solid rgba(74,158,160,0.2);border-radius:28px;
+  padding:36px 32px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  animation:auth-enter .5s ease both;
+}
+@keyframes auth-enter{
+  from{opacity:0;transform:translateY(24px) scale(0.97)}
+  to{opacity:1;transform:none}
+}
+.auth-logo{text-align:center;margin-bottom:28px}
+.auth-logo img{
+  width:72px;height:72px;border-radius:20px;margin-bottom:14px;
+  box-shadow:0 8px 32px rgba(74,158,160,0.4);
+}
+.auth-title{
+  font-family:'Sora',sans-serif;font-size:26px;font-weight:800;
+  background:linear-gradient(135deg,#fff,#8ABFCC);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:4px;
+}
+.auth-sub{font-size:12px;color:rgba(138,191,204,0.6);letter-spacing:.08em}
+.auth-tabs{
+  display:flex;background:rgba(255,255,255,0.05);
+  border-radius:14px;padding:4px;gap:4px;margin-bottom:24px;
+}
+.auth-tab{
+  flex:1;padding:10px;border:none;border-radius:10px;
+  background:none;color:rgba(255,255,255,0.4);
+  cursor:pointer;font-weight:700;font-size:13px;transition:all .2s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.auth-tab.active{background:rgba(74,158,160,0.25);color:#8ABFCC;box-shadow:0 2px 8px rgba(74,158,160,0.2)}
+.auth-form input{
+  width:100%;background:rgba(255,255,255,0.06);
+  border:1.5px solid rgba(74,158,160,0.2);border-radius:14px;
+  padding:14px 16px;color:#fff;font-size:14px;margin-bottom:12px;
+  outline:none;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;
+}
+.auth-form input:focus{border-color:rgba(74,158,160,0.6);background:rgba(74,158,160,0.08)}
+.auth-form input::placeholder{color:rgba(255,255,255,0.3)}
+.auth-btn{
+  width:100%;padding:14px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#4A9EA0,#7DAF8A);
+  color:#fff;font-weight:800;font-size:15px;cursor:pointer;
+  transition:all .2s;margin-top:4px;font-family:'Sora',sans-serif;
+  box-shadow:0 6px 24px rgba(74,158,160,0.4);letter-spacing:.02em;
+}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 10px 32px rgba(74,158,160,0.5)}
+.auth-btn:active{transform:translateY(0)}
+.auth-divider{
+  text-align:center;margin:16px 0;
+  color:rgba(255,255,255,0.2);font-size:12px;position:relative;
+}
+.auth-divider::before,.auth-divider::after{
+  content:'';position:absolute;top:50%;width:40%;height:1px;
+  background:rgba(255,255,255,0.08);
+}
+.auth-divider::before{left:0}
+.auth-divider::after{right:0}
+.auth-guest-btn{
+  width:100%;padding:12px;border:1.5px solid rgba(74,158,160,0.2);
+  border-radius:14px;background:none;color:rgba(138,191,204,0.8);
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.auth-guest-btn:hover{background:rgba(74,158,160,0.08);border-color:rgba(74,158,160,0.4)}
 </style>
 </head>
 <body>
 <!-- SPLASH -->
 <div id="splash">
-  <div style="text-align:center">
-    <img src="icon.png" style="width:80px;height:80px;border-radius:24px;margin-bottom:16px;box-shadow:0 0 40px rgba(108,99,255,.5)" class="sp-logo">
-    <div class="sp-title heading">MusicCore</div>
+  <!-- Floating rings -->
+  <div class="sp-ring"></div><div class="sp-ring"></div><div class="sp-ring"></div>
+  <!-- Floating notes -->
+  <span class="sp-note" style="left:8%;top:20%;animation-delay:0s">♪</span>
+  <span class="sp-note" style="right:10%;top:30%;animation-delay:1.2s;font-size:22px">♫</span>
+  <span class="sp-note" style="left:18%;bottom:25%;animation-delay:2s;font-size:14px">♩</span>
+  <span class="sp-note" style="right:20%;bottom:20%;animation-delay:0.6s">♬</span>
+  <span class="sp-note" style="left:5%;top:55%;animation-delay:1.8s;font-size:12px">♪</span>
+  <span class="sp-note" style="right:5%;top:60%;animation-delay:3s">♫</span>
+  <!-- Particles -->
+  <div class="sp-particle" style="left:25%;top:35%;animation-delay:0s"></div>
+  <div class="sp-particle" style="right:30%;top:55%;animation-delay:1s;background:rgba(125,175,138,0.6)"></div>
+  <div class="sp-particle" style="left:70%;top:25%;animation-delay:2s;background:rgba(232,164,74,0.5)"></div>
+  <div class="sp-particle" style="left:40%;bottom:30%;animation-delay:1.5s"></div>
+  <!-- Main content -->
+  <div class="sp-content">
+    <div class="sp-logo-wrap">
+      <div class="sp-logo-bg"></div>
+      <img src="icon.png" class="sp-logo" alt="MusicCore">
+    </div>
+    <div class="sp-title">MusicCore</div>
+    <div class="sp-sub">THE HEART OF SOUND</div>
+    <div class="sp-bar-wrap">
+      <div class="sp-bar"><div class="sp-fill"></div></div>
+      <div class="sp-loading-text" id="sp-loading-text">Loading your music...</div>
+    </div>
+  </div>
+</div>
+    <div class="sp-sub">THE HEART OF SOUND</div>
+    <div class="sp-bar"><div class="sp-fill"></div></div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div id="auth" style="display:none">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="icon.png" alt="MusicCore" style="width:72px;height:72px;border-radius:20px;margin-bottom:14px;box-shadow:0 8px 32px rgba(74,158,160,0.4)">
+      <div class="auth-title">MusicCore</div>
+      <div class="auth-sub">The Heart of Sound</div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+    <div class="auth-form" id="signin-form">
+      <input type="text" id="si-user" placeholder="Username or email" autocomplete="username">
+      <input type="password" id="si-pass" placeholder="Password" autocomplete="current-password">
+      <button class="auth-btn" onclick="doSignIn()">Sign In →</button>
+      <div class="auth-divider">or</div>
+      <button class="auth-guest-btn" onclick="guestMode()">🎵 Browse as Guest · No account needed</button>
+    </div>
+    <div class="auth-form" id="signup-form" style="display:none">
+      <input type="text" id="su-name" placeholder="Your artist / display name">
+      <input type="text" id="su-user" placeholder="Username">
+      <input type="email" id="su-email" placeholder="Email address">
+      <input type="password" id="su-pass" placeholder="Create a password">
+      <button class="auth-btn" onclick="doSignUp()">Create Account →</button>
+      <div class="auth-divider">or</div>
+      <button class="auth-guest-btn" onclick="guestMode()">🎵 Browse as Guest · No account needed</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- MAIN APP -->
+<div id="app">
+  <div id="topbar">
+    <div class="tb-logo">
+      <img src="icon.png" style="width:30px;height:30px;border-radius:9px;object-fit:contain">
+      <span class="tb-title heading">MusicCore</span>
+    </div>
+    <input class="tb-search" placeholder="🔍 Search songs, artists, podcasts..." id="global-search">
+    <div class="tb-right">
+      <button class="tb-btn" onclick="navigate('upload')" title="Upload" style="color:var(--p)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="tb-btn" onclick="navigate('notifications')" title="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <div class="tb-av" id="tb-av" onclick="navigate('profile')"></div>
+    </div>
+  </div>
+
+  <div id="main-area">
+    <!-- SIDEBAR -->
+    <nav id="sidebar">
+      <div class="sb-section">Menu</div>
+      <button class="sb-item active" data-nav="home">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home
+      </button>
+      <button class="sb-item" data-nav="discover">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Discover
+      </button>
+      <button class="sb-item" data-nav="trending">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Trending
+      </button>
+      <div class="sb-section">Library</div>
+      <button class="sb-item" data-nav="library">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> My Library
+      </button>
+      <button class="sb-item" data-nav="playlists">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Playlists
+      </button>
+      <button class="sb-item" data-nav="liked">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Liked Songs
+      </button>
+      <div class="sb-section">Create</div>
+      <button class="sb-item" data-nav="upload">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload
+      </button>
+      <button class="sb-item" data-nav="dashboard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg> Dashboard
+      </button>
+      <div class="sb-section">Features</div>
+      <button class="sb-item" data-nav="podcasts">🎙️ Podcasts</button>
+      <button class="sb-item" data-nav="live">🔴 Live</button>
+      <button class="sb-item" data-nav="messages">💬 Messages</button>
+      <button class="sb-item" data-nav="maldives">🇲🇻 Maldives</button>
+      <div style='padding:8px 16px 4px;font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--t3);text-transform:uppercase;margin-top:6px'>More Features</div>
+      <button class='sb-item' data-nav='ai-dj'>🎧 AI DJ</button>
+      <button class='sb-item' data-nav='battles'>⚔️ Music Battles</button>
+      <button class='sb-item' data-nav='marketplace'>🛒 Marketplace</button>
+      <button class='sb-item' data-nav='fan-clubs'>🎪 Fan Clubs</button>
+      <button class='sb-item' data-nav='coins'>🪙 MC Coins</button>
+      <button class='sb-item' data-nav='live-rooms'>🔴 Live Rooms</button>
+      <button class='sb-item' data-nav='academy'>🎓 Academy</button>
+      <button class='sb-item' data-nav='music-map'>🗺️ Music Map</button>
+      <button class='sb-item' data-nav='creator-levels'>🎤 Creator Levels</button>
+      <button class='sb-item' data-nav='mc-awards'>🏆 MC Awards</button>
+      <button class='sb-item' data-nav='trophies'>🏅 Trophies</button>
+    </nav>
+
+    <!-- CONTENT -->
+    <main id="content"></main>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottom-nav">
+    <div class="bn-inner">
+      <button class="bn-btn active" data-nav="home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Home
+      </button>
+      <button class="bn-btn" data-nav="discover">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Discover
+      </button>
+      <button class="bn-btn" data-nav="upload" style="color:var(--p)">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--p),var(--pink));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 4px 12px rgba(108,99,255,.4)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        Upload
+      </button>
+      <button class="bn-btn" data-nav="library">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Library
+      </button>
+      <button class="bn-btn" data-nav="profile">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Me
+      </button>
+    </div>
+  </div>
+
+  <!-- MINI PLAYER -->
+  <div id="player" class="mini" style="display:none">
+    <div class="mini-player" style="position:relative" onclick="expandPlayer()">
+      <div class="mini-art" id="mini-art" onclick="event.stopPropagation();expandPlayer()">🎵</div>
+      <div class="mini-info" onclick="expandPlayer()">
+        <div class="mini-title" id="mini-title">Tap a track to play</div>
+        <div class="mini-artist" id="mini-artist">MusicCore</div>
+      </div>
+      <div class="mini-controls" onclick="event.stopPropagation()">
+        <button class="ctrl-btn" onclick="prevTrack()" style="color:#7A8A98">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 20L9 12l10-8v16z"/><rect x="4" y="4" width="2" height="16" rx="1" fill="currentColor"/></svg>
+        </button>
+        <button class="ctrl-btn play" id="btn-play" onclick="togglePlay()">
+          <svg id="mini-play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+        <button class="ctrl-btn" onclick="nextTrack()" style="color:#7A8A98">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l10 8-10 8V4z"/><rect x="18" y="4" width="2" height="16" rx="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="mini-progress"><div class="mini-progress-fill" id="mini-progress" style="width:0%"></div></div>
+    </div>
     <div class="sp-sub">THE HEART OF SOUND</div>
     <div class="sp-bar"><div class="sp-fill"></div></div>
   </div>
@@ -452,35 +1046,69 @@ select option{background:var(--s2);color:var(--t)}
     </div>
     <!-- FULL PLAYER -->
     <div class="full-player" id="full-player">
-      <button class="fp-close" onclick="collapsePlayer()">⌄</button>
+      <div class="fp-header">
+      <button class="fp-close" onclick="collapsePlayer()" title="Minimise">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fp-header-title">Now Playing</div>
+      <button class="fp-queue-btn" onclick="toast('Queue coming soon','info')" title="Queue">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="fp-art-wrap">
+      <div class="fp-art-glow"></div>
       <div class="fp-art" id="fp-art">🎵</div>
-      <div class="fp-info">
-        <div class="fp-title" id="fp-title">—</div>
-        <div class="fp-artist" id="fp-artist">—</div>
-        <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-top:6px">
-          <span class="badge badge-p" id="fp-genre">—</span>
-        </div>
+    </div>
+    <div class="fp-info" style="position:relative">
+      <div class="fp-title" id="fp-title">—</div>
+      <div class="fp-artist" id="fp-artist">—</div>
+      <button class="fp-like-inline" id="fp-like" onclick="toggleLike()">♡</button>
+    </div>
+    <div class="fp-progress">
+      <div class="fp-bar" id="fp-bar-wrap" onclick="seekTrack(event)">
+        <div class="fp-fill" id="fp-bar" style="width:0%"></div>
       </div>
-      <div class="fp-progress">
-        <div class="fp-bar" onclick="seekTrack(event)"><div class="fp-fill" id="fp-bar" style="width:0%"></div></div>
-        <div class="fp-times"><span id="fp-cur">0:00</span><span id="fp-dur">0:00</span></div>
-      </div>
-      <div class="fp-controls">
-        <button class="ctrl-btn" id="btn-shuffle" onclick="toggleShuffle()" title="Shuffle">🔀</button>
-        <button class="ctrl-btn" onclick="prevTrack()">⏮</button>
-        <button class="ctrl-btn play" style="width:56px;height:56px;font-size:22px" id="btn-play2" onclick="togglePlay()">▶</button>
-        <button class="ctrl-btn" onclick="nextTrack()">⏭</button>
-        <button class="ctrl-btn" id="btn-repeat" onclick="toggleRepeat()" title="Repeat">🔁</button>
-      </div>
-      <div class="fp-actions">
-        <button class="ctrl-btn" id="fp-like" onclick="toggleLike()">♡</button>
-        <button class="ctrl-btn" onclick="repost()">🔁</button>
-        <button class="ctrl-btn" onclick="addToPlaylist()">➕</button>
-        <button class="ctrl-btn" onclick="shareTrack()">🔗</button>
-        <button class="ctrl-btn" onclick="downloadTrack()">⬇</button>
-      </div>
-      <!-- WAVEFORM -->
-      <div class="waveform" id="waveform" style="margin-top:16px"></div>
+      <div class="fp-times"><span id="fp-cur">0:00</span><span id="fp-dur">0:00</span></div>
+    </div>
+    <div class="fp-controls">
+      <button class="ctrl-btn" id="btn-shuffle" onclick="toggleShuffle()" title="Shuffle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="prevTrack()" title="Previous">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 20L9 12l10-8v16z"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ctrl-btn play" id="btn-play2" onclick="togglePlay()">
+        <svg id="fp-play-icon" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="nextTrack()" title="Next">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l10 8-10 8V4z"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="ctrl-btn" id="btn-repeat" onclick="toggleRepeat()" title="Repeat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </button>
+    </div>
+    <div class="fp-actions">
+      <button class="ctrl-btn" onclick="repost()" title="Repost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="addToPlaylist()" title="Add to playlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="shareTrack()" title="Share">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="downloadTrack()" title="Download">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+      <button class="ctrl-btn" id="fp-genre-btn" onclick="" title="Genre">
+        <span id="fp-genre" style="font-size:9px;font-weight:800;font-family:'Space Grotesk',monospace">—</span>
+      </button>
+    </div>
+    <div class="waveform" id="waveform"></div>
+    <div class="fp-volume">
+      <span class="vol-icon" onclick="toggleMute()">🔊</span>
+      <input type="range" class="vol-slider" id="vol-slider" min="0" max="100" value="100" oninput="setVolume(this.value)">
+    </div>
     </div>
   </div>
 </div>
@@ -1274,9 +1902,17 @@ function togglePlay() {
   } else {isPlaying=!isPlaying;}
   updatePlayBtn();
 }
-function updatePlayBtn(){
-  document.getElementById('btn-play').textContent=isPlaying?'⏸':'▶';
-  document.getElementById('btn-play2').textContent=isPlaying?'⏸':'▶';
+function updatePlayBtn() {
+  const playIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+  const pauseIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+  const playIcon2 = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+  const pauseIcon2 = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+  const b1 = document.getElementById('btn-play');
+  const b2 = document.getElementById('btn-play2');
+  if (b1) b1.innerHTML = isPlaying ? pauseIcon : playIcon;
+  if (b2) b2.innerHTML = isPlaying ? pauseIcon2 : playIcon2;
+  const art = document.getElementById('fp-art');
+  if (art) art.classList.toggle('spinning', isPlaying);
 }
 function prevTrack(){if(queue.length){queueIdx=Math.max(0,queueIdx-1);playTrack(queue[queueIdx]);}}
 function nextTrack(){if(queue.length){if(isShuffle)queueIdx=Math.floor(Math.random()*queue.length);else queueIdx=Math.min(queue.length-1,queueIdx+1);playTrack(queue[queueIdx]);}}
@@ -1346,6 +1982,7 @@ audio.addEventListener('timeupdate',()=>{
   const pct=(audio.currentTime/audio.duration)*100;
   document.getElementById('progress-bar').style.width=pct+'%';
   document.getElementById('fp-bar').style.width=pct+'%';
+  const mp=document.getElementById('mini-progress');if(mp)mp.style.width=pct+'%';
   document.getElementById('fp-cur').textContent=fmtTime(audio.currentTime);
   document.getElementById('fp-dur').textContent=fmtTime(audio.duration);
   // Animate waveform
@@ -1920,6 +2557,87 @@ function renderTrophies() {
   }).join('')}`;
 }
 
+
+// In-memory audio store (survives navigation, not page reload)
+const audioCache = new Map();
+
+function playTrackFixed(id) {
+  const t = tracks.find(x => x.id === id);
+  if (!t) { toast('Track not found','error'); return; }
+  currentTrack = t;
+  t.plays = (t.plays || 0) + 1;
+  try { saveAll(); } catch(e) {}
+
+  // Update UI
+  document.getElementById('mini-title').textContent = t.title;
+  document.getElementById('mini-artist').textContent = t.artistName || '—';
+  document.getElementById('fp-title').textContent = t.title;
+  document.getElementById('fp-artist').textContent = t.artistName || '—';
+  const genreEl = document.getElementById('fp-genre');
+  if (genreEl) genreEl.textContent = t.genre || 'Music';
+
+  // Artwork
+  const artHTML = t.coverArt
+    ? `<img src="${t.coverArt}" style="width:100%;height:100%;object-fit:cover">`
+    : '🎵';
+  document.getElementById('mini-art').innerHTML = artHTML;
+  document.getElementById('fp-art').innerHTML = artHTML;
+
+  // Audio — check in-memory cache first, then track data
+  const audioSrc = audioCache.get(id) || t.audioData;
+  if (audioSrc) {
+    audio.src = audioSrc;
+    audio.play()
+      .then(() => { isPlaying = true; updatePlayBtn(); })
+      .catch(e => { console.warn('Autoplay blocked:', e); toast('Tap play to start','info'); });
+  } else {
+    toast('No audio file — upload the track again with audio','info');
+  }
+
+  // Show player
+  const playerEl = document.getElementById('player');
+  playerEl.style.display = 'block';
+  playerEl.classList.remove('full');
+  playerEl.classList.add('mini');
+  generateWaveform();
+  updateLikeBtn();
+}
+
+// Override upload to cache audio in memory
+const _origUploadTrack = uploadTrack;
+function uploadTrackWithCache() {
+  const audioData = uploadedAudioData;
+  const titleEl = document.getElementById('up-title');
+  const title = titleEl?.value?.trim();
+  uploadTrack();
+  // After upload, cache the audio by title match
+  if (audioData && title) {
+    setTimeout(() => {
+      const t = tracks.find(x => x.title === title && x.userId === currentUser?.id);
+      if (t) audioCache.set(t.id, audioData);
+    }, 300);
+  }
+}
+
+function setVolume(val) {
+  audio.volume = val / 100;
+  const icon = document.querySelector('.vol-icon');
+  if (icon) icon.textContent = val == 0 ? '🔇' : val < 50 ? '🔉' : '🔊';
+}
+
+function toggleMute() {
+  audio.muted = !audio.muted;
+  const icon = document.querySelector('.vol-icon');
+  if (icon) icon.textContent = audio.muted ? '🔇' : '🔊';
+}
+
+
+function switchAuthTab(tab) {
+  document.getElementById('tab-signin').classList.toggle('active', tab === 'signin');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('signin-form').style.display = tab === 'signin' ? '' : 'none';
+  document.getElementById('signup-form').style.display = tab === 'signup' ? '' : 'none';
+}
 // ===== INIT =====
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 setTimeout(()=>{
