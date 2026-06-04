@@ -2760,6 +2760,7 @@ function deleteAudioBlob(trackId) {
 
 // ===== FIXED AUDIO FILE HANDLER =====
 let uploadedAudioBlob = null; // Store raw File/Blob, not base64
+let uploadedCoverData = null;
 
 function handleAudioFileFixed(e) {
   const file = e.target?.files?.[0] || e;
@@ -2875,28 +2876,24 @@ function playTrack(id) {
   t.plays = (t.plays || 0) + 1;
   try { saveAll(); } catch(e) {}
 
-  // Update UI
-  const miniTitle = document.getElementById('mini-title');
-  const miniArtist = document.getElementById('mini-artist');
-  const fpTitle = document.getElementById('fp-title');
-  const fpArtist = document.getElementById('fp-artist');
-  const fpGenre = document.getElementById('fp-genre');
-  if (miniTitle) miniTitle.textContent = t.title;
-  if (miniArtist) miniArtist.textContent = t.artistName || '—';
-  if (fpTitle) fpTitle.textContent = t.title;
-  if (fpArtist) fpArtist.textContent = t.artistName || '—';
-  if (fpGenre) fpGenre.textContent = t.genre || 'Music';
+  // Update UI text
+  const set = (elId, val) => { const el = document.getElementById(elId); if (el) el.textContent = val; };
+  set('mini-title', t.title);
+  set('mini-artist', t.artistName || '—');
+  set('fp-title', t.title);
+  set('fp-artist', t.artistName || '—');
+  set('fp-genre', t.genre || 'Music');
 
   // Artwork
   const artHTML = t.coverArt
-    ? `<img src="${t.coverArt}" style="width:100%;height:100%;object-fit:cover">`
+    ? '<img src="' + t.coverArt + '" style="width:100%;height:100%;object-fit:cover">'
     : '🎵';
   const miniArt = document.getElementById('mini-art');
   const fpArt = document.getElementById('fp-art');
   if (miniArt) miniArt.innerHTML = artHTML;
   if (fpArt) fpArt.innerHTML = artHTML;
 
-  // Show player bar
+  // Show mini player
   const playerEl = document.getElementById('player');
   if (playerEl) {
     playerEl.style.display = 'block';
@@ -2906,41 +2903,53 @@ function playTrack(id) {
   generateWaveform();
   updateLikeBtn();
 
-  // AUDIO: check memory cache → IndexedDB → legacy base64
-  const playAudio = (src) => {
-    audio.src = src;
-    audio.play()
-      .then(() => { isPlaying = true; updatePlayBtn(); })
-      .catch(err => {
-        console.warn('Play blocked:', err);
-        isPlaying = false;
-        updatePlayBtn();
-        toast('Tap ▶ to play', 'info');
-      });
-  };
+  // ─── AUDIO PLAYBACK ───────────────────────────────────
+  function doPlay(src) {
+    const audioEl = document.getElementById('audio-el');
+    if (!audioEl) { toast('Audio player not found', 'error'); return; }
+    audioEl.src = src;
+    const playPromise = audioEl.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => { isPlaying = true; updatePlayBtn(); })
+        .catch(() => {
+          isPlaying = false;
+          updatePlayBtn();
+          toast('Tap ▶ to play', 'info');
+        });
+    }
+  }
 
+  // 1. Session memory cache (fastest)
   if (blobURLCache.has(id)) {
-    // Already have a blob URL in memory
-    playAudio(blobURLCache.get(id));
-  } else if (t.audioData) {
-    // Legacy base64 stored directly
-    playAudio(t.audioData);
-  } else if (t.hasAudio) {
-    // Load from IndexedDB
+    doPlay(blobURLCache.get(id));
+    return;
+  }
+
+  // 2. Legacy base64 in track object
+  if (t.audioData) {
+    doPlay(t.audioData);
+    return;
+  }
+
+  // 3. IndexedDB (persisted across sessions)
+  if (t.hasAudio) {
+    toast('Loading audio...', 'info');
     getAudioBlob(id)
       .then(blob => {
         if (blob) {
-          const blobURL = URL.createObjectURL(blob);
-          blobURLCache.set(id, blobURL);
-          playAudio(blobURL);
+          const url = URL.createObjectURL(blob);
+          blobURLCache.set(id, url);
+          doPlay(url);
         } else {
-          toast('Audio not found — please re-upload the track', 'info');
+          toast('Audio not found — please re-upload this track', 'info');
         }
       })
       .catch(() => toast('Could not load audio', 'error'));
-  } else {
-    toast('No audio file for this track', 'info');
+    return;
   }
+
+  toast('No audio file — re-upload the track with an audio file', 'info');
 }
 
 
