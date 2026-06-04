@@ -1478,7 +1478,7 @@ function renderUpload() {
 
   <!-- UPLOAD ZONE -->
   <div class="upload-zone" id="upload-zone" onclick="document.getElementById('audio-file').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondrop="handleAudioDrop(event)">
-    <input type="file" id="audio-file" accept=".mp3,.wav,.aac,.flac,.ogg" style="display:none" onchange="handleAudioFile(event)">
+    <input type="file" id="audio-file" accept=".mp3,.wav,.aac,.flac,.ogg" style="display:none" onchange="handleAudioFile(event)" accept="audio/*">
     <div class="upload-icon">🎵</div>
     <div style="font-size:14px;font-weight:700;margin-bottom:6px">Drop your audio file here</div>
     <div style="font-size:12px;color:var(--t3)">MP3, WAV, AAC, FLAC supported · Max 100MB</div>
@@ -1544,10 +1544,11 @@ function renderUpload() {
   </div>`;
 }
 
-let uploadedAudioData = null;
-let uploadedCoverData = null;
+// (moved to audio system)
+// (moved to audio system)
 
-function handleAudioFile(e) {
+function handleAudioFile(e) { handleAudioFileFixed(e); return; }
+function _oldHandleAudioFile(e) {
   const file=e.target.files[0];
   if(!file) return;
   const preview=document.getElementById('audio-preview');
@@ -1567,7 +1568,8 @@ function handleAudioDrop(e) {
     handleAudioFile({target:{files:[file]}});
   }
 }
-function clearAudio(){uploadedAudioData=null;document.getElementById('audio-preview').style.display='none';}
+function clearAudio() { uploadedAudioBlob = null; uploadedAudioData = null; }
+function _clearAudioOld(){uploadedAudioData=null;document.getElementById('audio-preview').style.display='none';}
 function handleCoverArt(e) {
   const file=e.target.files[0];if(!file) return;
   const reader=new FileReader();
@@ -1575,54 +1577,8 @@ function handleCoverArt(e) {
   reader.readAsDataURL(file);
 }
 
-function uploadTrack() {
-  const btn = document.getElementById('publish-btn');
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ Publishing...'; }
-  setTimeout(() => {
-    const title = document.getElementById('up-title')?.value?.trim();
-    if (!title) {
-      toast('Track title required', 'error');
-      if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
-      return;
-    }
-    const dupIdx = tracks.findIndex(t => t.title === title && t.userId === currentUser?.id);
-    const track = {
-      id: dupIdx >= 0 ? tracks[dupIdx].id : UID(), title,
-      genre: document.getElementById('up-genre')?.value,
-      mood: document.getElementById('up-mood')?.value,
-      desc: document.getElementById('up-desc')?.value?.trim(),
-      tags: (document.getElementById('up-tags')?.value || '').split(',').map(t => t.trim()).filter(Boolean),
-      lang: document.getElementById('up-lang')?.value,
-      releaseDate: document.getElementById('up-date')?.value,
-      visibility: document.querySelector('input[name="vis"]:checked')?.value || 'public',
-      producer: document.getElementById('up-prod')?.value?.trim(),
-      composer: document.getElementById('up-comp')?.value?.trim(),
-      lyrics: document.getElementById('up-lyrics')?.value?.trim(),
-      audioData: uploadedAudioData,
-      coverArt: uploadedCoverData,
-      userId: currentUser?.id,
-      artistName: currentUser?.name,
-      uploadDate: new Date().toISOString(),
-      plays: dupIdx >= 0 ? (tracks[dupIdx].plays || 0) : 0,
-      likes: dupIdx >= 0 ? (tracks[dupIdx].likes || 0) : 0,
-      comments: dupIdx >= 0 ? (tracks[dupIdx].comments || []) : [],
-      reposts: dupIdx >= 0 ? (tracks[dupIdx].reposts || 0) : 0
-    };
-    if (dupIdx >= 0) tracks[dupIdx] = track;
-    else tracks.unshift(track);
-    try { saveAll(); }
-    catch(e) {
-      track.audioData = null;
-      if (dupIdx >= 0) tracks[dupIdx] = track; else tracks[0] = track;
-      try { saveAll(); } catch(e2) { toast('Storage full — clear old tracks', 'error'); return; }
-      toast('Track saved (audio too large for offline storage)', 'info');
-    }
-    uploadedAudioData = null; uploadedCoverData = null;
-    toast('🎵 Track published!', 'success');
-    if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
-    setTimeout(() => navigate('library'), 600);
-  }, 100);
-}
+// uploadTrack defined in audio system above
+
 
 // ===== DASHBOARD (Creator) =====
 function renderDashboard() {
@@ -2561,47 +2517,8 @@ function renderTrophies() {
 // In-memory audio store (survives navigation, not page reload)
 const audioCache = new Map();
 
-function playTrackFixed(id) {
-  const t = tracks.find(x => x.id === id);
-  if (!t) { toast('Track not found','error'); return; }
-  currentTrack = t;
-  t.plays = (t.plays || 0) + 1;
-  try { saveAll(); } catch(e) {}
+// playTrackFixed replaced by playTrack
 
-  // Update UI
-  document.getElementById('mini-title').textContent = t.title;
-  document.getElementById('mini-artist').textContent = t.artistName || '—';
-  document.getElementById('fp-title').textContent = t.title;
-  document.getElementById('fp-artist').textContent = t.artistName || '—';
-  const genreEl = document.getElementById('fp-genre');
-  if (genreEl) genreEl.textContent = t.genre || 'Music';
-
-  // Artwork
-  const artHTML = t.coverArt
-    ? `<img src="${t.coverArt}" style="width:100%;height:100%;object-fit:cover">`
-    : '🎵';
-  document.getElementById('mini-art').innerHTML = artHTML;
-  document.getElementById('fp-art').innerHTML = artHTML;
-
-  // Audio — check in-memory cache first, then track data
-  const audioSrc = audioCache.get(id) || t.audioData;
-  if (audioSrc) {
-    audio.src = audioSrc;
-    audio.play()
-      .then(() => { isPlaying = true; updatePlayBtn(); })
-      .catch(e => { console.warn('Autoplay blocked:', e); toast('Tap play to start','info'); });
-  } else {
-    toast('No audio file — upload the track again with audio','info');
-  }
-
-  // Show player
-  const playerEl = document.getElementById('player');
-  playerEl.style.display = 'block';
-  playerEl.classList.remove('full');
-  playerEl.classList.add('mini');
-  generateWaveform();
-  updateLikeBtn();
-}
 
 // Override upload to cache audio in memory
 const _origUploadTrack = uploadTrack;
@@ -2638,6 +2555,237 @@ function switchAuthTab(tab) {
   document.getElementById('signin-form').style.display = tab === 'signin' ? '' : 'none';
   document.getElementById('signup-form').style.display = tab === 'signup' ? '' : 'none';
 }
+
+// ===== AUDIO STORAGE (IndexedDB — no size limit) =====
+const AUDIO_DB = 'mc-audio-v1';
+const blobURLCache = new Map(); // trackId -> blob URL (session memory)
+
+function openAudioDB() {
+  return new Promise((res, rej) => {
+    const req = indexedDB.open(AUDIO_DB, 1);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('audio')) {
+        db.createObjectStore('audio', { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = e => res(e.target.result);
+    req.onerror = e => rej(e);
+  });
+}
+
+function saveAudioBlob(trackId, blob) {
+  return openAudioDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction('audio', 'readwrite');
+    tx.objectStore('audio').put({ id: trackId, blob, savedAt: Date.now() });
+    tx.oncomplete = () => res();
+    tx.onerror = e => rej(e);
+  }));
+}
+
+function getAudioBlob(trackId) {
+  return openAudioDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction('audio', 'readonly');
+    const req = tx.objectStore('audio').get(trackId);
+    req.onsuccess = e => res(e.target.result?.blob || null);
+    req.onerror = e => rej(e);
+  }));
+}
+
+function deleteAudioBlob(trackId) {
+  return openAudioDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction('audio', 'readwrite');
+    tx.objectStore('audio').delete(trackId);
+    tx.oncomplete = () => res();
+    tx.onerror = () => res();
+  }));
+}
+
+// ===== FIXED AUDIO FILE HANDLER =====
+let uploadedAudioBlob = null; // Store raw File/Blob, not base64
+
+function handleAudioFileFixed(e) {
+  const file = e.target?.files?.[0] || e;
+  if (!file) return;
+  uploadedAudioBlob = file;
+  uploadedAudioData = null; // Don't use base64
+
+  const preview = document.getElementById('audio-preview');
+  if (preview) {
+    preview.style.display = 'block';
+    const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+    const sizeOk = file.size < 50 * 1024 * 1024; // warn over 50MB
+    preview.innerHTML = `<div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(74,158,160,0.08);border:1px solid rgba(74,158,160,0.2);border-radius:12px">
+      <div style="font-size:28px">🎵</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--t1)">${file.name}</div>
+        <div style="font-size:11px;color:${sizeOk?'var(--green)':'var(--pink)'};${!sizeOk?'font-weight:700':''}">${sizeMB} MB · ${file.type || 'audio'}${!sizeOk?' ⚠️ Large file':' ✓ Ready'}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="clearAudio()" style="flex-shrink:0">✕</button>
+    </div>`;
+  }
+  const zone = document.getElementById('upload-zone');
+  if (zone) zone.style.borderColor = 'var(--p)';
+}
+
+// ===== FIXED UPLOAD TRACK =====
+function uploadTrack() {
+  const title = document.getElementById('up-title')?.value?.trim();
+  if (!title) { toast('Track title is required', 'error'); return; }
+  if (!uploadedAudioBlob) { toast('Please select an audio file', 'error'); return; }
+
+  const btn = document.getElementById('publish-btn') || document.querySelector('[onclick="uploadTrack()"]');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Saving...'; }
+
+  const trackId = UID();
+  const track = {
+    id: trackId, title,
+    genre: document.getElementById('up-genre')?.value || 'Pop',
+    mood: document.getElementById('up-mood')?.value || '',
+    desc: document.getElementById('up-desc')?.value?.trim() || '',
+    tags: (document.getElementById('up-tags')?.value || '').split(',').map(t => t.trim()).filter(Boolean),
+    lang: document.getElementById('up-lang')?.value || 'English',
+    releaseDate: document.getElementById('up-date')?.value || '',
+    visibility: document.querySelector('input[name="vis"]:checked')?.value || 'public',
+    producer: document.getElementById('up-prod')?.value?.trim() || '',
+    composer: document.getElementById('up-comp')?.value?.trim() || '',
+    lyrics: document.getElementById('up-lyrics')?.value?.trim() || '',
+    audioData: null,      // NOT stored in localStorage
+    coverArt: uploadedCoverData || null,
+    userId: currentUser?.id,
+    artistName: currentUser?.name || 'Unknown Artist',
+    uploadDate: new Date().toISOString(),
+    plays: 0, likes: 0, comments: [], reposts: 0,
+    hasAudio: true        // flag: audio is in IndexedDB
+  };
+
+  // Remove old duplicate by same title+user
+  const dupIdx = tracks.findIndex(t => t.title === title && t.userId === currentUser?.id);
+  if (dupIdx >= 0) {
+    deleteAudioBlob(tracks[dupIdx].id);
+    tracks.splice(dupIdx, 1);
+  }
+
+  // Save audio blob to IndexedDB
+  saveAudioBlob(trackId, uploadedAudioBlob)
+    .then(() => {
+      // Also cache a blob URL for immediate playback this session
+      const blobURL = URL.createObjectURL(uploadedAudioBlob);
+      blobURLCache.set(trackId, blobURL);
+
+      tracks.unshift(track);
+      try { saveAll(); } catch(e) {
+        // If localStorage is full, clear old audio data from other tracks
+        tracks.forEach(t => { t.audioData = null; });
+        saveAll();
+      }
+
+      uploadedAudioBlob = null;
+      uploadedAudioData = null;
+      uploadedCoverData = null;
+
+      if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+      toast('🎵 Track published!', 'success');
+      setTimeout(() => navigate('library'), 600);
+    })
+    .catch(err => {
+      console.error('IndexedDB error:', err);
+      // Fallback: try base64 in localStorage
+      if (uploadedAudioBlob.size < 3 * 1024 * 1024) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          track.audioData = ev.target.result;
+          tracks.unshift(track);
+          try { saveAll(); } catch(e) {}
+          if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+          toast('🎵 Track published!', 'success');
+          setTimeout(() => navigate('library'), 600);
+        };
+        reader.readAsDataURL(uploadedAudioBlob);
+      } else {
+        toast('Storage error — try a smaller file', 'error');
+        if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+      }
+    });
+}
+
+// ===== FIXED PLAY TRACK =====
+function playTrack(id) {
+  const t = tracks.find(x => x.id === id);
+  if (!t) { toast('Track not found', 'error'); return; }
+
+  currentTrack = t;
+  t.plays = (t.plays || 0) + 1;
+  try { saveAll(); } catch(e) {}
+
+  // Update UI
+  const miniTitle = document.getElementById('mini-title');
+  const miniArtist = document.getElementById('mini-artist');
+  const fpTitle = document.getElementById('fp-title');
+  const fpArtist = document.getElementById('fp-artist');
+  const fpGenre = document.getElementById('fp-genre');
+  if (miniTitle) miniTitle.textContent = t.title;
+  if (miniArtist) miniArtist.textContent = t.artistName || '—';
+  if (fpTitle) fpTitle.textContent = t.title;
+  if (fpArtist) fpArtist.textContent = t.artistName || '—';
+  if (fpGenre) fpGenre.textContent = t.genre || 'Music';
+
+  // Artwork
+  const artHTML = t.coverArt
+    ? `<img src="${t.coverArt}" style="width:100%;height:100%;object-fit:cover">`
+    : '🎵';
+  const miniArt = document.getElementById('mini-art');
+  const fpArt = document.getElementById('fp-art');
+  if (miniArt) miniArt.innerHTML = artHTML;
+  if (fpArt) fpArt.innerHTML = artHTML;
+
+  // Show player bar
+  const playerEl = document.getElementById('player');
+  if (playerEl) {
+    playerEl.style.display = 'block';
+    playerEl.classList.remove('full');
+    playerEl.classList.add('mini');
+  }
+  generateWaveform();
+  updateLikeBtn();
+
+  // AUDIO: check memory cache → IndexedDB → legacy base64
+  const playAudio = (src) => {
+    audio.src = src;
+    audio.play()
+      .then(() => { isPlaying = true; updatePlayBtn(); })
+      .catch(err => {
+        console.warn('Play blocked:', err);
+        isPlaying = false;
+        updatePlayBtn();
+        toast('Tap ▶ to play', 'info');
+      });
+  };
+
+  if (blobURLCache.has(id)) {
+    // Already have a blob URL in memory
+    playAudio(blobURLCache.get(id));
+  } else if (t.audioData) {
+    // Legacy base64 stored directly
+    playAudio(t.audioData);
+  } else if (t.hasAudio) {
+    // Load from IndexedDB
+    getAudioBlob(id)
+      .then(blob => {
+        if (blob) {
+          const blobURL = URL.createObjectURL(blob);
+          blobURLCache.set(id, blobURL);
+          playAudio(blobURL);
+        } else {
+          toast('Audio not found — please re-upload the track', 'info');
+        }
+      })
+      .catch(() => toast('Could not load audio', 'error'));
+  } else {
+    toast('No audio file for this track', 'info');
+  }
+}
+
 // ===== INIT =====
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 setTimeout(()=>{
