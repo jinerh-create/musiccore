@@ -7,19 +7,19 @@
 <title>MusicCore — The Heart of Sound</title>
 <link rel="manifest" href="manifest.json">
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Raleway:wght@300;400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0A0A0F;--s1:#12121A;--s2:#1A1A2E;--s3:#22223A;
-  --p:#6C63FF;--p2:#8B85FF;--pink:#FF6584;--cyan:#00F5FF;
-  --gold:#FFD700;--green:#1DB954;
-  --t:#FFFFFF;--t2:#B3B3B3;--t3:#6B6B8A;
-  --border:rgba(108,99,255,0.15);--radius:14px;
-  --glass:rgba(255,255,255,0.05);
-  --shadow:0 8px 32px rgba(0,0,0,0.5);
+  --bg:#F2F4F0;--s1:#FAFBFA;--s2:#FFFFFF;--s3:#EDF0EC;
+  --p:#4A9EA0;--p2:#3B8587;--pink:#E8A44A;--cyan:#8ABFCC;
+  --gold:#E8A44A;--green:#7DAF8A;
+  --t:#1A2332;--t2:#3D4F5E;--t3:#7A8A98;
+  --border:rgba(74,158,160,0.18);--radius:14px;
+  --glass:rgba(74,158,160,0.06);
+  --shadow:0 8px 32px rgba(26,35,50,0.12);
 }
-body{background:var(--bg);color:var(--t);font-family:"Raleway",system-ui,sans-serif;min-height:100vh;overflow-x:hidden;letter-spacing:.02em}
-.heading,.sp-title,.auth-title,.sec-title,.fp-title,.tb-title,.modal-title{font-family:"Pinyon Script",cursive!important;font-weight:400!important;letter-spacing:.02em}
+body{background:var(--bg);color:var(--t);font-family:"Plus+Jakarta+Sans","Plus Jakarta Sans",system-ui,sans-serif;min-height:100vh;overflow-x:hidden;letter-spacing:.02em}
+.heading,.sp-title,.auth-title,.sec-title,.fp-title,.tb-title,.modal-title{font-family:"Sora",cursive!important;font-weight:400!important;letter-spacing:.02em}
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--s1)}
@@ -107,7 +107,7 @@ body{background:var(--bg);color:var(--t);font-family:"Raleway",system-ui,sans-se
 .hero-banner::after{content:'';position:absolute;right:60px;bottom:-60px;width:150px;height:150px;background:radial-gradient(circle,rgba(255,101,132,.15),transparent);border-radius:50%}
 /* SECTION HEADER */
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.sec-title{font-size:18px;font-weight:400;color:var(--t);font-family:"Pinyon Script",cursive!important;letter-spacing:.04em}
+.sec-title{font-size:18px;font-weight:400;color:var(--t);font-family:"Sora",cursive!important;letter-spacing:.04em}
 .sec-link{font-size:12px;color:var(--p);cursor:pointer;background:none;border:none;font-family:inherit;font-weight:600}
 /* GENRE CHIPS */
 .genre-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none}
@@ -140,7 +140,7 @@ body{background:var(--bg);color:var(--t);font-family:"Raleway",system-ui,sans-se
 .fp-art{width:min(280px,60vw);aspect-ratio:1;border-radius:20px;background:linear-gradient(135deg,var(--p),var(--pink));display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:24px;box-shadow:0 20px 60px rgba(108,99,255,.4);overflow:hidden;flex-shrink:0}
 .fp-art img{width:100%;height:100%;object-fit:cover}
 .fp-info{text-align:center;margin-bottom:20px;width:100%}
-.fp-title{font-size:24px;font-weight:400;margin-bottom:6px;font-family:"Pinyon Script",cursive!important}
+.fp-title{font-size:24px;font-weight:400;margin-bottom:6px;font-family:"Sora",cursive!important}
 .fp-artist{font-size:14px;color:var(--t3)}
 .fp-progress{width:100%;max-width:360px;margin-bottom:12px}
 .fp-bar{height:5px;background:var(--s3);border-radius:3px;cursor:pointer;position:relative;margin-bottom:6px}
@@ -230,6 +230,54 @@ select option{background:var(--s2);color:var(--t)}
   #content{padding:12px;padding-bottom:130px}
   .tb-search{display:none}
 }
+
+  /* === LIGHT THEME OVERRIDES === */
+  body { background: var(--bg); color: var(--t1); }
+  .glass-card { background: var(--s2); border-color: var(--border); box-shadow: 0 2px 16px rgba(74,158,160,.10); }
+  .sidebar { background: var(--s2); border-right: 1px solid var(--border); }
+  .topbar { background: var(--s2); border-bottom: 1px solid var(--border); box-shadow: 0 2px 8px rgba(74,158,160,.08); }
+  .mini-player { background: var(--s2); border-top: 1px solid var(--border); box-shadow: 0 -2px 16px rgba(74,158,160,.12); }
+  .track-card { background: var(--s2); border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(74,158,160,.10); }
+  .track-card:hover { box-shadow: 0 6px 24px rgba(74,158,160,.18); transform: translateY(-2px); }
+  .btn-primary { background: linear-gradient(135deg,#4A9EA0,#7DAF8A); color: #fff; }
+  .btn-ghost { background: rgba(74,158,160,.08); color: var(--p); border: 1px solid rgba(74,158,160,.25); }
+  .btn-ghost:hover { background: rgba(74,158,160,.15); }
+  .chip { background: rgba(74,158,160,.10); color: var(--p); border: 1px solid rgba(74,158,160,.2); }
+  .chip.active { background: var(--p); color: #fff; }
+  .chip:hover { background: rgba(74,158,160,.2); }
+  .sb-item { color: var(--t2); }
+  .sb-item:hover, .sb-item.active { background: rgba(74,158,160,.12); color: var(--p); }
+  .sb-item.active { border-left: 3px solid var(--p); }
+  input, select, textarea { background: var(--s3); border: 1.5px solid var(--border); color: var(--t1); }
+  input:focus, select:focus, textarea:focus { border-color: var(--p); box-shadow: 0 0 0 3px rgba(74,158,160,.15); }
+  .modal-backdrop { background: rgba(26,35,50,.5); backdrop-filter: blur(8px); }
+  .modal { background: var(--s2); border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(26,35,50,.2); }
+  .bottom-nav { background: var(--s2); border-top: 1px solid var(--border); box-shadow: 0 -2px 16px rgba(74,158,160,.10); }
+  .bottom-nav .nav-item.active { color: var(--p); }
+  .toast.success { background: #7DAF8A; }
+  .toast.error { background: #C05840; }
+  .toast.info { background: #4A9EA0; }
+  .live-badge { background: #C05840; }
+  .badge-p { background: rgba(74,158,160,.15); color: var(--p); }
+  .badge-green { background: rgba(125,175,138,.15); color: var(--green); }
+  ::-webkit-scrollbar-track { background: var(--s3); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--p); }
+  .sec-title { color: var(--t3); }
+  .empty { color: var(--t3); }
+  .stat-label { color: var(--t3); }
+  .track-artist { color: var(--t3); }
+
+  /* === FONT SYSTEM === */
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
+  h1,h2,h3,h4,.sec-title,.modal-title,.track-title,
+  .hero-title,.app-name,.page-title { font-family:'Sora',system-ui,sans-serif; }
+  .stat-value,.badge,.chip,code { font-family:'Space Grotesk',monospace; }
+  h1 { font-size:28px; font-weight:800; letter-spacing:-.5px; }
+  h2 { font-size:22px; font-weight:700; }
+  h3 { font-size:16px; font-weight:600; }
+  .sec-title { font-family:'Sora',sans-serif; font-weight:700; font-size:13px; }
+  .track-title { font-family:'Sora',sans-serif; font-weight:700; }
 </style>
 </head>
 <body>
@@ -338,6 +386,18 @@ select option{background:var(--s2);color:var(--t)}
       <button class="sb-item" data-nav="live">🔴 Live</button>
       <button class="sb-item" data-nav="messages">💬 Messages</button>
       <button class="sb-item" data-nav="maldives">🇲🇻 Maldives</button>
+      <div style='padding:8px 16px 4px;font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--t3);text-transform:uppercase;margin-top:6px'>More Features</div>
+      <button class='sb-item' data-nav='ai-dj'>🎧 AI DJ</button>
+      <button class='sb-item' data-nav='battles'>⚔️ Music Battles</button>
+      <button class='sb-item' data-nav='marketplace'>🛒 Marketplace</button>
+      <button class='sb-item' data-nav='fan-clubs'>🎪 Fan Clubs</button>
+      <button class='sb-item' data-nav='coins'>🪙 MC Coins</button>
+      <button class='sb-item' data-nav='live-rooms'>🔴 Live Rooms</button>
+      <button class='sb-item' data-nav='academy'>🎓 Academy</button>
+      <button class='sb-item' data-nav='music-map'>🗺️ Music Map</button>
+      <button class='sb-item' data-nav='creator-levels'>🎤 Creator Levels</button>
+      <button class='sb-item' data-nav='mc-awards'>🏆 MC Awards</button>
+      <button class='sb-item' data-nav='trophies'>🏅 Trophies</button>
     </nav>
 
     <!-- CONTENT -->
@@ -529,6 +589,10 @@ function navigate(page) {
     upload:renderUpload,dashboard:renderDashboard,
     podcasts:renderPodcasts,live:renderLive,messages:renderMessages,
     maldives:renderMaldives,profile:renderProfile,notifications:renderNotifications,
+    'ai-dj':renderAIDJ,battles:renderMusicBattles,marketplace:renderMarketplace,
+    'fan-clubs':renderFanClubs,coins:renderCoins,'live-rooms':renderLiveRooms,
+    academy:renderAcademy,'music-map':renderMusicMap,'creator-levels':renderCreatorLevels,
+    'mc-awards':renderMCAwards,trophies:renderTrophies,
   };
   const fn=renders[page];
   document.getElementById('content').innerHTML=fn?fn():'<div class="empty"><div class="empty-icon">🎵</div><div>Coming soon</div></div>';
@@ -884,31 +948,52 @@ function handleCoverArt(e) {
 }
 
 function uploadTrack() {
-  const title=document.getElementById('up-title')?.value?.trim();
-  if(!title){toast('Track title required','error');return;}
-  const track={
-    id:UID(),title,
-    genre:document.getElementById('up-genre')?.value,
-    mood:document.getElementById('up-mood')?.value,
-    desc:document.getElementById('up-desc')?.value?.trim(),
-    tags:(document.getElementById('up-tags')?.value||'').split(',').map(t=>t.trim()).filter(Boolean),
-    lang:document.getElementById('up-lang')?.value,
-    releaseDate:document.getElementById('up-date')?.value,
-    visibility:document.querySelector('input[name="vis"]:checked')?.value||'public',
-    producer:document.getElementById('up-prod')?.value?.trim(),
-    composer:document.getElementById('up-comp')?.value?.trim(),
-    lyrics:document.getElementById('up-lyrics')?.value?.trim(),
-    audioData:uploadedAudioData,
-    coverArt:uploadedCoverData,
-    userId:currentUser?.id,
-    artistName:currentUser?.name,
-    uploadDate:new Date().toISOString(),
-    plays:0,likes:0,comments:[],reposts:0
-  };
-  tracks.unshift(track);saveAll();
-  toast('🎵 Track published successfully!','success');
-  navigate('library');
-  uploadedAudioData=null;uploadedCoverData=null;
+  const btn = document.getElementById('publish-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Publishing...'; }
+  setTimeout(() => {
+    const title = document.getElementById('up-title')?.value?.trim();
+    if (!title) {
+      toast('Track title required', 'error');
+      if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+      return;
+    }
+    const dupIdx = tracks.findIndex(t => t.title === title && t.userId === currentUser?.id);
+    const track = {
+      id: dupIdx >= 0 ? tracks[dupIdx].id : UID(), title,
+      genre: document.getElementById('up-genre')?.value,
+      mood: document.getElementById('up-mood')?.value,
+      desc: document.getElementById('up-desc')?.value?.trim(),
+      tags: (document.getElementById('up-tags')?.value || '').split(',').map(t => t.trim()).filter(Boolean),
+      lang: document.getElementById('up-lang')?.value,
+      releaseDate: document.getElementById('up-date')?.value,
+      visibility: document.querySelector('input[name="vis"]:checked')?.value || 'public',
+      producer: document.getElementById('up-prod')?.value?.trim(),
+      composer: document.getElementById('up-comp')?.value?.trim(),
+      lyrics: document.getElementById('up-lyrics')?.value?.trim(),
+      audioData: uploadedAudioData,
+      coverArt: uploadedCoverData,
+      userId: currentUser?.id,
+      artistName: currentUser?.name,
+      uploadDate: new Date().toISOString(),
+      plays: dupIdx >= 0 ? (tracks[dupIdx].plays || 0) : 0,
+      likes: dupIdx >= 0 ? (tracks[dupIdx].likes || 0) : 0,
+      comments: dupIdx >= 0 ? (tracks[dupIdx].comments || []) : [],
+      reposts: dupIdx >= 0 ? (tracks[dupIdx].reposts || 0) : 0
+    };
+    if (dupIdx >= 0) tracks[dupIdx] = track;
+    else tracks.unshift(track);
+    try { saveAll(); }
+    catch(e) {
+      track.audioData = null;
+      if (dupIdx >= 0) tracks[dupIdx] = track; else tracks[0] = track;
+      try { saveAll(); } catch(e2) { toast('Storage full — clear old tracks', 'error'); return; }
+      toast('Track saved (audio too large for offline storage)', 'info');
+    }
+    uploadedAudioData = null; uploadedCoverData = null;
+    toast('🎵 Track published!', 'success');
+    if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+    setTimeout(() => navigate('library'), 600);
+  }, 100);
 }
 
 // ===== DASHBOARD (Creator) =====
@@ -1282,6 +1367,558 @@ function closeModal(){document.getElementById('mc').innerHTML='';}
 
 // ===== TOAST =====
 function toast(msg,type='info'){const el=document.createElement('div');el.className=`toast-item ${type}`;el.innerHTML=`<span style="color:${type==='success'?'var(--green)':type==='error'?'var(--pink)':'var(--p)'}">${type==='success'?'✓':type==='error'?'✕':'ℹ'}</span>${msg}`;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+// MUSICCORE EXTRA FEATURES - injected into main app
+
+// FIX: uploadTrack with duplicate prevention
+function uploadTrackFixed() {
+  const title = document.getElementById('up-title')?.value?.trim();
+  const btn = document.querySelector('[onclick="uploadTrack()"]') || document.querySelector('[onclick="uploadTrackFixed()"]');
+  if (!title) { toast('Track title required', 'error'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Publishing...'; }
+  try {
+    const track = {
+      id: UID(), title,
+      genre: document.getElementById('up-genre')?.value,
+      mood: document.getElementById('up-mood')?.value,
+      desc: document.getElementById('up-desc')?.value?.trim(),
+      tags: (document.getElementById('up-tags')?.value || '').split(',').map(t => t.trim()).filter(Boolean),
+      lang: document.getElementById('up-lang')?.value,
+      releaseDate: document.getElementById('up-date')?.value,
+      visibility: document.querySelector('input[name="vis"]:checked')?.value || 'public',
+      producer: document.getElementById('up-prod')?.value?.trim(),
+      composer: document.getElementById('up-comp')?.value?.trim(),
+      lyrics: document.getElementById('up-lyrics')?.value?.trim(),
+      audioData: uploadedAudioData,
+      coverArt: uploadedCoverData,
+      userId: currentUser?.id,
+      artistName: currentUser?.name,
+      uploadDate: new Date().toISOString(),
+      plays: 0, likes: 0, comments: [], reposts: 0
+    };
+    // Remove duplicates by title+userId before adding
+    const existingIdx = tracks.findIndex(t => t.title === title && t.userId === currentUser?.id && t.id !== track.id);
+    if (existingIdx >= 0) tracks.splice(existingIdx, 1);
+    tracks.unshift(track);
+    try { saveAll(); } catch(e) {
+      // If localStorage full, save without audio data
+      track.audioData = null;
+      tracks[0] = track;
+      saveAll();
+      toast('Track saved (audio stored in session only — file too large for offline)', 'info');
+    }
+    uploadedAudioData = null; uploadedCoverData = null;
+    toast('🎵 Track published!', 'success');
+    setTimeout(() => navigate('library'), 500);
+  } catch(e) {
+    toast('Error publishing: ' + e.message, 'error');
+    if (btn) { btn.disabled = false; btn.textContent = '🎵 Publish Track'; }
+  }
+}
+
+// ===== MUSICCORE COINS =====
+let mcCoins = JSON.parse(localStorage.getItem('mc_coins') || '500');
+function renderCoins() {
+  return `
+  <div style="background:linear-gradient(135deg,#D4AF37,#FF8C00,#D4AF37);border-radius:20px;padding:24px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-20px;top:-20px;font-size:100px;opacity:.1">🪙</div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:.15em;opacity:.8">YOUR BALANCE</div>
+    <div style="font-size:48px;font-weight:900;margin:6px 0">🪙 ${mcCoins.toLocaleString()}</div>
+    <div style="font-size:13px;opacity:.85">MusicCore Coins · ≈ $${(mcCoins * 0.01).toFixed(2)} USD</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+    ${[['Buy 500','$4.99',500],['Buy 1200','$9.99',1200],['Buy 2600','$19.99',2600],['Buy 5500','$39.99',5500],['Buy 12000','$79.99',12000],['Buy 25000','$149.99',25000]].map(([l,p,amt]) => `
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;cursor:pointer;transition:all .2s" onclick="buyCoins(${amt})">
+      <div style="font-size:22px;margin-bottom:4px">🪙</div>
+      <div style="font-size:14px;font-weight:900;color:#D4AF37">${amt.toLocaleString()}</div>
+      <div style="font-size:11px;color:var(--t3);margin-top:2px">${p}</div>
+      <button class="btn btn-sm" style="background:linear-gradient(135deg,#D4AF37,#FF8C00);color:#000;font-weight:800;margin-top:8px;width:100%;border-radius:20px">Buy</button>
+    </div>`).join('')}
+  </div>
+  <div class="glass-card">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px">💎 Spend Coins On</div>
+    ${[['🎁','Virtual Gifts','Send gifts to artists',100],['👑','Premium Badge','Exclusive profile badge',5000],['🚀','Track Boost','Boost your track visibility',500],['🎟️','Event Tickets','Attend exclusive events',2000],['🏆','Trophy','Limited edition trophies',1000],['🎨','Profile Frame','Animated profile frame',800]].map(([i,t,d,cost]) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--s3);border-radius:10px;margin-bottom:6px">
+      <span style="font-size:22px">${i}</span>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700">${t}</div><div style="font-size:10px;color:var(--t3)">${d}</div></div>
+      <button class="btn btn-ghost btn-sm" onclick="spendCoins(${cost},'${t}')">🪙 ${cost.toLocaleString()}</button>
+    </div>`).join('')}
+  </div>`;
+}
+function buyCoins(amt) { mcCoins += amt; localStorage.setItem('mc_coins', mcCoins); toast(`🪙 ${amt.toLocaleString()} coins added!`, 'success'); navigate('coins'); }
+function spendCoins(cost, item) {
+  if (mcCoins < cost) { toast('Not enough coins! Buy more.', 'error'); return; }
+  mcCoins -= cost; localStorage.setItem('mc_coins', mcCoins);
+  toast(`✨ ${item} purchased! 🪙 -${cost}`, 'success'); navigate('coins');
+}
+
+// ===== AI DJ =====
+let aiDJPlaying = false;
+let aiDJInterval = null;
+function renderAIDJ() {
+  return `
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:60px;margin-bottom:10px;animation:pulse-logo 2s infinite">🎧</div>
+    <div style="font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--p2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">AI DJ</div>
+    <div style="font-size:13px;color:var(--t3);margin-top:4px">Your personal AI-powered DJ mixing your music taste</div>
+  </div>
+  <div class="glass-card" style="text-align:center;margin-bottom:14px">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px">🎛️ DJ Mode</div>
+    <div id="ai-dj-status" style="font-size:12px;color:var(--t3);margin-bottom:14px">Select a vibe and let AI DJ take over</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px">
+      ${['Party Banger','Chill Session','Workout Fire','Late Night Vibes','Island Vibes','Study Mode'].map(v => `<button class="chip" onclick="setDJVibe('${v}')">${v}</button>`).join('')}
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="btn btn-primary" id="dj-play-btn" onclick="toggleAIDJ()">🎧 Start AI DJ</button>
+      <button class="btn btn-ghost btn-sm" onclick="toast('Crossfade mixing — coming soon!','info')">🎛️ Crossfade</button>
+    </div>
+  </div>
+  <div class="glass-card">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px">🔮 AI Features</div>
+    ${[['🎵','Auto Mix','Seamlessly mixes tracks with smooth transitions'],['🎚️','BPM Match','Matches tempos for perfect transitions'],['🎭','Mood Reading','Reads your vibe and adjusts the music'],['🌊','Energy Flow','Builds energy gradually for the perfect set'],['🔁','Smart Loop','Loops the best parts of each track']].map(([i,t,d]) => `
+    <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:20px">${i}</span>
+      <div><div style="font-size:12px;font-weight:700">${t}</div><div style="font-size:10px;color:var(--t3)">${d}</div></div>
+    </div>`).join('')}
+  </div>`;
+}
+function setDJVibe(vibe) {
+  document.getElementById('ai-dj-status').textContent = `🎧 AI DJ tuned to: ${vibe}`;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.textContent === vibe));
+}
+function toggleAIDJ() {
+  aiDJPlaying = !aiDJPlaying;
+  const btn = document.getElementById('dj-play-btn');
+  if (aiDJPlaying) {
+    btn.textContent = '⏹ Stop AI DJ';
+    document.getElementById('ai-dj-status').textContent = '🎧 AI DJ is mixing... sit back and enjoy!';
+    if (tracks.length) { playQueue(tracks.map(t => t.id)); }
+    else toast('Upload tracks for AI DJ to mix!', 'info');
+  } else {
+    btn.textContent = '🎧 Start AI DJ';
+    document.getElementById('ai-dj-status').textContent = 'AI DJ stopped';
+  }
+}
+
+// ===== MUSIC BATTLES =====
+let battles = JSON.parse(localStorage.getItem('mc_battles') || '[]');
+function renderMusicBattles() {
+  const activeBattles = battles.filter(b => b.status === 'active');
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">⚔️ Music Battles</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Track vs Track — let the fans decide the winner</div>
+  <div style="display:flex;gap:8px;margin-bottom:16px">
+    <button class="btn btn-primary btn-sm" onclick="openCreateBattle()">⚔️ Start Battle</button>
+    <button class="btn btn-ghost btn-sm" onclick="navigate('leaderboard')">🏆 Battle Rankings</button>
+  </div>
+  ${activeBattles.length ? activeBattles.map(b => `
+  <div class="glass-card" style="margin-bottom:10px">
+    <div style="font-size:10px;font-weight:700;color:var(--pink);letter-spacing:.1em;margin-bottom:10px">⚔️ BATTLE · ${b.timeLeft || '24h left'}</div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center">
+      <div style="text-align:center;background:rgba(220,20,60,.1);border-radius:12px;padding:14px;cursor:pointer" onclick="voteInBattle('${b.id}','a')">
+        <div style="font-size:30px;margin-bottom:6px">🎵</div>
+        <div style="font-size:12px;font-weight:700">${b.trackA?.title || 'Track A'}</div>
+        <div style="font-size:10px;color:var(--t3)">${b.trackA?.artist || '—'}</div>
+        <div style="font-size:16px;font-weight:900;color:var(--pink);margin-top:6px">${b.votesA || 0}</div>
+        <div style="font-size:9px;color:var(--t3)">votes</div>
+        <button class="btn btn-sm" style="margin-top:8px;background:rgba(220,20,60,.2);color:var(--pink);border:1px solid var(--pink);width:100%;border-radius:20px">Vote ♥</button>
+      </div>
+      <div style="font-size:20px;font-weight:900;color:var(--t3)">VS</div>
+      <div style="text-align:center;background:rgba(108,99,255,.1);border-radius:12px;padding:14px;cursor:pointer" onclick="voteInBattle('${b.id}','b')">
+        <div style="font-size:30px;margin-bottom:6px">🎵</div>
+        <div style="font-size:12px;font-weight:700">${b.trackB?.title || 'Track B'}</div>
+        <div style="font-size:10px;color:var(--t3)">${b.trackB?.artist || '—'}</div>
+        <div style="font-size:16px;font-weight:900;color:var(--p2);margin-top:6px">${b.votesB || 0}</div>
+        <div style="font-size:9px;color:var(--t3)">votes</div>
+        <button class="btn btn-sm" style="margin-top:8px;background:rgba(108,99,255,.2);color:var(--p2);border:1px solid var(--p);width:100%;border-radius:20px">Vote ♥</button>
+      </div>
+    </div>
+  </div>`).join('') : `
+  <div class="empty">
+    <div class="empty-icon">⚔️</div>
+    <div style="font-size:14px;font-weight:600;color:var(--t2)">No active battles</div>
+    <div style="margin-top:4px">Challenge another artist to a track battle!</div>
+    <button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="openCreateBattle()">Start First Battle</button>
+  </div>`}`;
+}
+function openCreateBattle() {
+  const myTracks = tracks.filter(t => t.userId === currentUser?.id);
+  openModal(`<div class="modal-header"><div class="modal-title">⚔️ Start Music Battle</div><button class="close-btn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="form-group"><label>Your Track</label><select id="bt-a">${myTracks.map(t => `<option value="${t.id}">${t.title}</option>`).join('') || '<option>Upload a track first</option>'}</select></div>
+    <div class="form-group"><label>Opponent Track</label><select id="bt-b">${tracks.filter(t=>t.userId!==currentUser?.id).map(t => `<option value="${t.id}">${t.title} — ${t.artistName}</option>`).join('') || '<option>No opponent tracks</option>'}</select></div>
+    <div class="form-group"><label>Battle Duration</label><select id="bt-dur"><option value="24">24 Hours</option><option value="48">48 Hours</option><option value="72">72 Hours</option></select></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-sm" onclick="createBattle()">⚔️ Start Battle</button></div>`);
+}
+function createBattle() {
+  const aId = document.getElementById('bt-a')?.value;
+  const bId = document.getElementById('bt-b')?.value;
+  if (!aId || !bId) { toast('Select both tracks', 'error'); return; }
+  const tA = tracks.find(t => t.id === aId);
+  const tB = tracks.find(t => t.id === bId);
+  battles.unshift({ id: UID(), trackA: { id: aId, title: tA?.title, artist: tA?.artistName }, trackB: { id: bId, title: tB?.title, artist: tB?.artistName }, votesA: 0, votesB: 0, status: 'active', timeLeft: '24h left', createdAt: new Date().toISOString() });
+  localStorage.setItem('mc_battles', JSON.stringify(battles));
+  closeModal(); toast('⚔️ Battle started! Share it to get votes!', 'success'); navigate('battles');
+}
+function voteInBattle(id, side) {
+  const b = battles.find(x => x.id === id);
+  if (!b) return;
+  if (side === 'a') b.votesA = (b.votesA || 0) + 1;
+  else b.votesB = (b.votesB || 0) + 1;
+  localStorage.setItem('mc_battles', JSON.stringify(battles));
+  toast('Vote cast! 🗳️', 'success'); navigate('battles');
+}
+
+// ===== CREATOR MARKETPLACE =====
+let marketplace = JSON.parse(localStorage.getItem('mc_market') || '[]');
+function renderMarketplace() {
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🛒 Creator Marketplace</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Buy & sell beats, samples, vocals, and services</div>
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    ${['All','Beats','Vocals','Samples','Sound Packs','Services','Tutorials'].map((c,i) => `<button class="chip ${i===0?'active':''}">${c}</button>`).join('')}
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div style="font-size:12px;color:var(--t3)">${marketplace.length} items for sale</div>
+    <button class="btn btn-primary btn-sm" onclick="openSellItem()">+ Sell Item</button>
+  </div>
+  ${marketplace.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+    ${marketplace.map(item => `
+    <div class="track-card">
+      <div class="track-art" style="background:linear-gradient(135deg,${item.color||'var(--p)'},var(--pink))">
+        <div style="font-size:36px">${item.icon||'🎵'}</div>
+      </div>
+      <div class="track-body">
+        <div class="track-title">${item.name}</div>
+        <div class="track-artist">${item.type} · by ${item.seller}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <div style="font-size:14px;font-weight:900;color:var(--green)">$${item.price}</div>
+          <button class="btn btn-sm" style="background:var(--green);color:#fff;border-radius:20px;padding:4px 10px;font-size:10px" onclick="buyItem('${item.id}')">Buy</button>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div>` : `<div class="empty"><div class="empty-icon">🛒</div><div>No items for sale yet</div><button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="openSellItem()">List First Item</button></div>`}`;
+}
+function openSellItem() {
+  openModal(`<div class="modal-header"><div class="modal-title">Sell Item</div><button class="close-btn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="form-group"><label>Item Name</label><input id="mk-name" placeholder="Trap Beat - Dark Vibes"></div>
+    <div class="form-group"><label>Type</label><select id="mk-type"><option>Beat</option><option>Vocal Sample</option><option>Sound Pack</option><option>Tutorial</option><option>Service</option></select></div>
+    <div class="form-group"><label>Price (USD)</label><input type="number" id="mk-price" placeholder="9.99" step="0.01" min="0.99"></div>
+    <div class="form-group"><label>Description</label><textarea id="mk-desc" rows="2" placeholder="Describe your item..."></textarea></div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-sm" onclick="listItem()">List for Sale</button></div>`);
+}
+function listItem() {
+  const name = document.getElementById('mk-name')?.value?.trim();
+  const price = parseFloat(document.getElementById('mk-price')?.value);
+  if (!name || !price) { toast('Fill all fields', 'error'); return; }
+  const icons = { Beat: '🥁', 'Vocal Sample': '🎤', 'Sound Pack': '📦', Tutorial: '📚', Service: '⚡' };
+  const colors = ['#6C63FF,#FF6584', '#00C853,#00BCD4', '#FFD700,#FF8C00'];
+  const type = document.getElementById('mk-type')?.value;
+  marketplace.unshift({ id: UID(), name, type, price: price.toFixed(2), desc: document.getElementById('mk-desc')?.value, seller: currentUser?.name, userId: currentUser?.id, icon: icons[type] || '🎵', color: colors[Math.floor(Math.random() * colors.length)].split(',')[0], createdAt: new Date().toISOString() });
+  localStorage.setItem('mc_market', JSON.stringify(marketplace));
+  closeModal(); toast('Item listed!', 'success'); navigate('marketplace');
+}
+function buyItem(id) { const item = marketplace.find(x => x.id === id); if (item) toast(`Purchasing "${item.name}" for $${item.price}...`, 'info'); }
+
+// ===== FAN CLUBS =====
+let fanClubs = JSON.parse(localStorage.getItem('mc_clubs') || '[]');
+function renderFanClubs() {
+  const myClubs = fanClubs.filter(c => c.members?.includes(currentUser?.id) || c.ownerId === currentUser?.id);
+  const artistClubs = fanClubs.filter(c => !myClubs.find(m => m.id === c.id));
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🎪 Fan Clubs</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Join artist fan clubs and connect with fellow fans</div>
+  <button class="btn btn-primary btn-sm" style="margin-bottom:14px" onclick="openCreateClub()">🎪 Create Fan Club</button>
+  ${myClubs.length ? `<div class="sec-hdr"><div class="sec-title">My Clubs</div></div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+    ${myClubs.map(c => `
+    <div class="glass-card" style="display:flex;align-items:center;gap:12px;cursor:pointer">
+      <div style="width:48px;height:48px;border-radius:14px;background:${c.color||'linear-gradient(135deg,var(--p),var(--pink))'};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${c.emoji||'🎵'}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${c.name}</div><div style="font-size:10px;color:var(--t3)">${c.members?.length||0} members · ${c.isPublic?'Public':'Private'}</div></div>
+      <span class="badge badge-p">Member</span>
+    </div>`).join('')}
+  </div>` : ''}
+  <div class="sec-hdr"><div class="sec-title">Discover Clubs</div></div>
+  ${fanClubs.length ? fanClubs.map(c => `
+  <div class="glass-card" style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+    <div style="width:48px;height:48px;border-radius:14px;background:${c.color||'linear-gradient(135deg,var(--p),var(--pink))'};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">${c.emoji||'🎵'}</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:700">${c.name}</div><div style="font-size:10px;color:var(--t3)">${c.desc||'Fan club'} · ${c.members?.length||0} members</div></div>
+    <button class="btn btn-primary btn-sm" onclick="joinClub('${c.id}')">Join</button>
+  </div>`).join('') : `<div class="empty" style="padding:24px"><div class="empty-icon">🎪</div><div>No fan clubs yet — create one!</div></div>`}`;
+}
+function openCreateClub() {
+  openModal(`<div class="modal-header"><div class="modal-title">Create Fan Club</div><button class="close-btn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="form-group"><label>Club Name</label><input id="fc-name" placeholder="e.g. Jinaah's #1 Fans"></div>
+    <div class="form-group"><label>Description</label><input id="fc-desc" placeholder="What's this club about?"></div>
+    <div class="form-group"><label>Emoji</label><input id="fc-emoji" placeholder="🎵" style="font-size:20px;width:80px"></div>
+    <div class="form-group"><label>Type</label>
+      <div style="display:flex;gap:10px"><label style="text-transform:none;font-size:13px;cursor:pointer"><input type="radio" name="fctype" value="public" checked style="width:auto;margin-right:6px">Public</label><label style="text-transform:none;font-size:13px;cursor:pointer"><input type="radio" name="fctype" value="private" style="width:auto;margin-right:6px">Private</label></div>
+    </div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-sm" onclick="saveClub()">Create Club</button></div>`);
+}
+function saveClub() {
+  const name = document.getElementById('fc-name')?.value?.trim();
+  if (!name) { toast('Club name required', 'error'); return; }
+  const colors = ['linear-gradient(135deg,#6C63FF,#FF6584)', 'linear-gradient(135deg,#00C853,#00BCD4)', 'linear-gradient(135deg,#FFD700,#FF8C00)', 'linear-gradient(135deg,#FF1493,#FF6347)'];
+  fanClubs.unshift({ id: UID(), name, desc: document.getElementById('fc-desc')?.value, emoji: document.getElementById('fc-emoji')?.value || '🎵', isPublic: document.querySelector('input[name="fctype"]:checked')?.value === 'public', ownerId: currentUser?.id, members: [currentUser?.id], color: colors[Math.floor(Math.random() * colors.length)], createdAt: new Date().toISOString() });
+  localStorage.setItem('mc_clubs', JSON.stringify(fanClubs));
+  closeModal(); toast('Fan club created! 🎪', 'success'); navigate('fan-clubs');
+}
+function joinClub(id) { const c = fanClubs.find(x => x.id === id); if (!c) return; if (!c.members) c.members = []; if (!c.members.includes(currentUser?.id)) c.members.push(currentUser?.id); localStorage.setItem('mc_clubs', JSON.stringify(fanClubs)); toast(`Joined ${c.name}!`, 'success'); navigate('fan-clubs'); }
+
+// ===== LIVE AUDIO ROOMS =====
+let liveRooms = JSON.parse(localStorage.getItem('mc_rooms') || '[]');
+function renderLiveRooms() {
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🔴 Live Audio Rooms</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Join live conversations, concerts, and podcast sessions</div>
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <button class="btn btn-primary btn-sm" onclick="openCreateRoom()">🎙️ Start Room</button>
+    <button class="btn btn-ghost btn-sm">🎟️ Ticketed Events</button>
+  </div>
+  ${liveRooms.filter(r => r.status === 'live').length ? liveRooms.filter(r => r.status === 'live').map(r => `
+  <div class="glass-card" style="margin-bottom:10px;border-color:rgba(255,20,60,.3);background:rgba(255,20,60,.05)">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span class="live-badge" style="font-size:10px;padding:3px 8px">🔴 LIVE</span>
+      <div style="font-size:14px;font-weight:800">${r.name}</div>
+    </div>
+    <div style="font-size:12px;color:var(--t3);margin-bottom:10px">${r.desc || ''} · ${r.listeners || 0} listeners</div>
+    <div style="display:flex;gap:-8px;margin-bottom:12px">
+      ${[...Array(Math.min(r.listeners || 3, 5))].map(() => `<div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pink));border:2px solid var(--bg);margin-left:-4px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">🎵</div>`).join('')}
+    </div>
+    <button class="btn btn-primary btn-sm" style="width:100%" onclick="joinRoom('${r.id}')">🎧 Join Room</button>
+  </div>`).join('') : `
+  <div class="empty"><div class="empty-icon">🔴</div><div>No live rooms right now</div><div style="margin-top:4px;font-size:12px;color:var(--t3)">Be the first to go live!</div></div>`}
+  <div class="sec-hdr" style="margin-top:16px"><div class="sec-title">Room Types</div></div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+    ${[['🎤','Open Mic','Anyone can take the mic and perform'],['🎙️','Podcast Room','Host a live podcast with call-ins'],['🎵','DJ Room','Stream music and take song requests'],['🎟️','VIP Concert','Exclusive paid concert experience']].map(([i,t,d]) => `
+    <div class="glass-card" style="cursor:pointer;padding:14px" onclick="openCreateRoom()">
+      <div style="font-size:24px;margin-bottom:6px">${i}</div>
+      <div style="font-size:12px;font-weight:700;margin-bottom:3px">${t}</div>
+      <div style="font-size:10px;color:var(--t3)">${d}</div>
+    </div>`).join('')}
+  </div>`;
+}
+function openCreateRoom() {
+  openModal(`<div class="modal-header"><div class="modal-title">🎙️ Create Live Room</div><button class="close-btn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="form-group"><label>Room Name</label><input id="rm-name" placeholder="Late Night Vibes with ${currentUser?.name}"></div>
+    <div class="form-group"><label>Description</label><input id="rm-desc" placeholder="What's happening in this room?"></div>
+    <div class="form-group"><label>Room Type</label><select id="rm-type"><option>Open Mic</option><option>Podcast</option><option>DJ Room</option><option>VIP Concert</option></select></div>
+    <div class="form-group"><label>Access</label>
+      <div style="display:flex;gap:10px"><label style="text-transform:none;font-size:13px;cursor:pointer"><input type="radio" name="rmaccess" value="free" checked style="width:auto;margin-right:6px">Free</label><label style="text-transform:none;font-size:13px;cursor:pointer"><input type="radio" name="rmaccess" value="paid" style="width:auto;margin-right:6px">Paid (Ticket)</label></div>
+    </div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button><button class="btn btn-primary btn-sm" onclick="createRoom()">🔴 Go Live</button></div>`);
+}
+function createRoom() {
+  const name = document.getElementById('rm-name')?.value?.trim();
+  if (!name) { toast('Room name required', 'error'); return; }
+  liveRooms.unshift({ id: UID(), name, desc: document.getElementById('rm-desc')?.value, type: document.getElementById('rm-type')?.value, access: document.querySelector('input[name="rmaccess"]:checked')?.value, hostId: currentUser?.id, hostName: currentUser?.name, listeners: 1, status: 'live', startedAt: new Date().toISOString() });
+  localStorage.setItem('mc_rooms', JSON.stringify(liveRooms));
+  closeModal(); toast('🔴 You are now live!', 'success'); navigate('live-rooms');
+}
+function joinRoom(id) { const r = liveRooms.find(x => x.id === id); if (r) { r.listeners = (r.listeners || 0) + 1; localStorage.setItem('mc_rooms', JSON.stringify(liveRooms)); toast(`Joined "${r.name}"! 🎧`, 'success'); navigate('live-rooms'); } }
+
+// ===== MUSIC LEARNING ACADEMY =====
+function renderAcademy() {
+  const courses = [
+    { emoji: '🎵', title: 'Music Theory Basics', level: 'Beginner', lessons: 12, duration: '6 hrs', rating: 4.8, students: 1240, color: 'var(--p)' },
+    { emoji: '🥁', title: 'Beat Making for Beginners', level: 'Beginner', lessons: 8, duration: '4 hrs', rating: 4.9, students: 2100, color: '#FF6347' },
+    { emoji: '🎤', title: 'Vocal Techniques', level: 'Intermediate', lessons: 15, duration: '8 hrs', rating: 4.7, students: 890, color: 'var(--pink)' },
+    { emoji: '🎹', title: 'Piano for Producers', level: 'Intermediate', lessons: 20, duration: '10 hrs', rating: 4.6, students: 650, color: '#D4AF37' },
+    { emoji: '🎛️', title: 'Mixing & Mastering', level: 'Advanced', lessons: 18, duration: '12 hrs', rating: 4.9, students: 430, color: 'var(--cyan)' },
+    { emoji: '📱', title: 'Music Marketing', level: 'Beginner', lessons: 10, duration: '5 hrs', rating: 4.5, students: 1800, color: 'var(--green)' },
+    { emoji: '🎵', title: 'Boduberu Masterclass', level: 'All Levels', lessons: 8, duration: '4 hrs', rating: 5.0, students: 340, color: '#006400' },
+    { emoji: '🎸', title: 'Guitar for Singers', level: 'Beginner', lessons: 14, duration: '7 hrs', rating: 4.7, students: 720, color: '#8B4513' },
+  ];
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🎓 Music Learning Academy</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Learn music production, vocals, instruments & more</div>
+  <div class="genre-chips">
+    ${['All', 'Beginner', 'Production', 'Vocals', 'Instruments', 'Business', 'Maldivian'].map((c, i) => `<button class="chip ${i === 0 ? 'active' : ''}">${c}</button>`).join('')}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+    ${courses.map(course => `
+    <div class="track-card" onclick="openCourse('${course.title}')">
+      <div class="track-art" style="background:linear-gradient(135deg,${course.color},rgba(0,0,0,.5));height:120px">
+        <div style="font-size:40px">${course.emoji}</div>
+        <div style="position:absolute;top:8px;left:8px"><span class="badge" style="background:rgba(0,0,0,.5);color:#fff;font-size:8px">${course.level}</span></div>
+      </div>
+      <div class="track-body">
+        <div class="track-title">${course.title}</div>
+        <div style="font-size:10px;color:var(--t3);margin-top:2px">${course.lessons} lessons · ${course.duration}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+          <div style="font-size:11px;color:var(--gold)">⭐ ${course.rating} (${course.students.toLocaleString()})</div>
+          <button class="btn btn-sm" style="background:linear-gradient(135deg,var(--p),var(--pink));color:#fff;border-radius:20px;padding:3px 10px;font-size:9px" onclick="event.stopPropagation();openCourse('${course.title}')">Enroll</button>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+function openCourse(title) { toast(`Enrolling in "${title}"... Course coming soon!`, 'info'); }
+
+// ===== MUSIC MAP =====
+function renderMusicMap() {
+  const countries = [
+    { flag: '🇲🇻', name: 'Maldives', tracks: tracks.filter(t => t.lang === 'Dhivehi' || ['Boduberu', 'Dhivehi Pop', 'Traditional'].includes(t.genre)).length + 45, artists: 12 },
+    { flag: '🇮🇳', name: 'India', tracks: 1240, artists: 89 },
+    { flag: '🇱🇰', name: 'Sri Lanka', tracks: 430, artists: 34 },
+    { flag: '🇬🇧', name: 'UK', tracks: 890, artists: 67 },
+    { flag: '🇺🇸', name: 'USA', tracks: 2100, artists: 156 },
+    { flag: '🇦🇺', name: 'Australia', tracks: 340, artists: 28 },
+    { flag: '🇿🇦', name: 'South Africa', tracks: 230, artists: 19 },
+    { flag: '🇯🇵', name: 'Japan', tracks: 560, artists: 42 },
+    { flag: '🇧🇷', name: 'Brazil', tracks: 780, artists: 58 },
+    { flag: '🇳🇬', name: 'Nigeria', tracks: 420, artists: 31 },
+  ];
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🗺️ Music Map</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">Discover music from around the world</div>
+  <div style="background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:24px;text-align:center;margin-bottom:16px;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column">
+    <div style="font-size:48px;margin-bottom:10px">🌍</div>
+    <div style="font-size:14px;font-weight:700">Interactive World Music Map</div>
+    <div style="font-size:12px;color:var(--t3);margin-top:4px">Explore music from ${countries.length}+ countries</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px">
+      ${countries.slice(0, 6).map(c => `<button class="chip" onclick="exploreCountry('${c.name}')">${c.flag} ${c.name}</button>`).join('')}
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    ${countries.map((c, i) => `
+    <div class="glass-card" style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="exploreCountry('${c.name}')">
+      <div style="font-size:28px;width:40px;text-align:center">${c.flag}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700">${c.name}</div>
+        <div style="font-size:10px;color:var(--t3)">${c.tracks.toLocaleString()} tracks · ${c.artists} artists</div>
+        <div style="height:4px;background:var(--s3);border-radius:2px;margin-top:5px;overflow:hidden"><div style="height:100%;width:${Math.min(c.tracks / 25, 100)}%;background:linear-gradient(90deg,var(--p),var(--pink));border-radius:2px"></div></div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--p2)">${i < 3 ? '🏆' : ''} #${i + 1}</div>
+    </div>`).join('')}
+  </div>`;
+}
+function exploreCountry(name) { toast(`Exploring music from ${name}...`, 'info'); }
+
+// ===== CREATOR LEVELS =====
+const CREATOR_LEVELS = [
+  { level: 1, name: 'Unsigned', emoji: '🌱', min: 0, max: 99, color: '#78716C', perks: ['Upload tracks', 'Basic analytics'] },
+  { level: 2, name: 'Rising Star', emoji: '⭐', min: 100, max: 499, color: '#06B6D4', perks: ['Featured on Discover', 'Priority support'] },
+  { level: 3, name: 'Indie Artist', emoji: '🎵', min: 500, max: 1999, color: '#6C63FF', perks: ['Creator badge', 'Monetization unlock'] },
+  { level: 4, name: 'Pro Creator', emoji: '🔥', min: 2000, max: 4999, color: '#FF6347', perks: ['Verified badge', 'Advanced analytics'] },
+  { level: 5, name: 'Gold Artist', emoji: '🥇', min: 5000, max: 9999, color: '#D4AF37', perks: ['Gold badge', 'Exclusive drops'] },
+  { level: 6, name: 'Platinum', emoji: '💎', min: 10000, max: 24999, color: '#9CA3AF', perks: ['Platinum badge', 'Dedicated support'] },
+  { level: 7, name: 'Diamond', emoji: '💠', min: 25000, max: 49999, color: '#00F5FF', perks: ['Diamond badge', 'Billboard features'] },
+  { level: 8, name: 'Legend', emoji: '👑', min: 50000, max: 99999, color: '#FFD700', perks: ['Legend status', 'Hall of Fame'] },
+  { level: 9, name: 'Icon', emoji: '🌟', min: 100000, max: 999999, color: '#FF1493', perks: ['Icon badge', 'Global features'] },
+  { level: 10, name: 'Music God', emoji: '🏆', min: 1000000, max: Infinity, color: '#FF8C00', perks: ['Music God badge', 'Lifetime free premium'] },
+];
+function renderCreatorLevels() {
+  const myTracks = tracks.filter(t => t.userId === currentUser?.id);
+  const totalPlays = myTracks.reduce((s, t) => s + (t.plays || 0), 0);
+  const currentLevel = CREATOR_LEVELS.reduce((cl, l) => totalPlays >= l.min ? l : cl, CREATOR_LEVELS[0]);
+  const nextLevel = CREATOR_LEVELS[currentLevel.level] || null;
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:16px">🎤 Creator Levels</div>
+  <div style="background:linear-gradient(135deg,${currentLevel.color}33,${currentLevel.color}11);border:2px solid ${currentLevel.color}66;border-radius:20px;padding:20px;margin-bottom:16px;text-align:center">
+    <div style="font-size:48px;margin-bottom:8px">${currentLevel.emoji}</div>
+    <div style="font-size:22px;font-weight:900;color:${currentLevel.color}">${currentLevel.name}</div>
+    <div style="font-size:13px;color:var(--t3);margin-top:4px">Level ${currentLevel.level} · ${totalPlays.toLocaleString()} plays</div>
+    ${nextLevel ? `<div style="margin-top:12px"><div style="font-size:11px;color:var(--t3);margin-bottom:4px">${nextLevel.min.toLocaleString() - totalPlays} more plays to ${nextLevel.name} ${nextLevel.emoji}</div><div style="height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.min((totalPlays - currentLevel.min) / (nextLevel.min - currentLevel.min) * 100, 100)}%;background:${currentLevel.color};border-radius:3px"></div></div></div>` : '<div style="font-size:12px;color:var(--gold);margin-top:8px">🏆 Maximum Level Achieved!</div>'}
+    <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px">${currentLevel.perks.map(p => `<span class="badge" style="background:${currentLevel.color}22;color:${currentLevel.color}">${p}</span>`).join('')}</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    ${CREATOR_LEVELS.map(l => `
+    <div style="background:${totalPlays >= l.min ? l.color + '15' : 'var(--s2)'};border:1px solid ${totalPlays >= l.min ? l.color + '44' : 'var(--border)'};border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;opacity:${totalPlays >= l.min ? 1 : 0.5}">
+      <div style="font-size:28px">${l.emoji}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div style="font-size:13px;font-weight:800">Level ${l.level} — ${l.name}</div>
+          ${totalPlays >= l.min ? `<span class="badge badge-green">✓ Unlocked</span>` : `<span style="font-size:10px;color:var(--t3)">${l.min.toLocaleString()} plays needed</span>`}
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">${l.perks.map(p => `<span style="font-size:9px;background:${l.color}15;color:${l.color};padding:1px 6px;border-radius:8px">${p}</span>`).join('')}</div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ===== MUSICCORE AWARDS =====
+const MC_AWARDS = [
+  { id: 'aw1', name: 'Track of the Year', emoji: '🏆', desc: 'Most played track of the year', winner: 'TBA', color: '#D4AF37' },
+  { id: 'aw2', name: 'Artist of the Year', emoji: '👑', desc: 'Top performing artist with most plays & followers', winner: 'TBA', color: '#FF6347' },
+  { id: 'aw3', name: 'Newcomer of the Year', emoji: '🌟', desc: 'Best new artist of the year', winner: 'TBA', color: '#00F5FF' },
+  { id: 'aw4', name: 'Best Boduberu', emoji: '🥁', desc: 'Best traditional Maldivian music', winner: 'TBA', color: '#006400' },
+  { id: 'aw5', name: 'Fan Choice Award', emoji: '♥', desc: 'Most voted by fans', winner: 'TBA', color: '#FF1493' },
+  { id: 'aw6', name: 'Best Producer', emoji: '🎛️', desc: 'Top music producer of the year', winner: 'TBA', color: '#6C63FF' },
+  { id: 'aw7', name: 'Battle Champion', emoji: '⚔️', desc: 'Most battles won', winner: 'TBA', color: '#FF8C00' },
+  { id: 'aw8', name: 'Community Hero', emoji: '🌍', desc: 'Most positive community impact', winner: 'TBA', color: '#00C853' },
+];
+function renderMCAwards() {
+  return `
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:48px;margin-bottom:10px">🏆</div>
+    <div style="font-size:24px;font-weight:900;background:linear-gradient(135deg,#D4AF37,#FF8C00);-webkit-background-clip:text;-webkit-text-fill-color:transparent">MusicCore Awards 2026</div>
+    <div style="font-size:13px;color:var(--t3);margin-top:4px">The biggest night in digital music — vote for your favourites!</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+    ${MC_AWARDS.map(a => `
+    <div style="background:linear-gradient(135deg,${a.color}22,${a.color}11);border:1px solid ${a.color}44;border-radius:16px;padding:18px;text-align:center;cursor:pointer;transition:all .2s" onclick="voteForAward('${a.id}')">
+      <div style="font-size:36px;margin-bottom:8px">${a.emoji}</div>
+      <div style="font-size:13px;font-weight:800;color:${a.color};margin-bottom:4px">${a.name}</div>
+      <div style="font-size:11px;color:var(--t3);margin-bottom:12px;line-height:1.4">${a.desc}</div>
+      <div style="font-size:11px;color:var(--t3);margin-bottom:8px">Winner: <strong style="color:${a.color}">${a.winner}</strong></div>
+      <button class="btn btn-sm" style="background:${a.color};color:#fff;width:100%;border-radius:20px">🗳️ Vote Now</button>
+    </div>`).join('')}
+  </div>`;
+}
+function voteForAward(id) { const a = MC_AWARDS.find(x => x.id === id); if (a) toast(`Voted for ${a.name}! 🗳️`, 'success'); }
+
+// ===== SEASONAL TROPHIES =====
+function renderTrophies() {
+  const allTrophies = [
+    { id: 't1', name: 'Summer Beats 2026', emoji: '☀️', type: 'Seasonal', desc: 'Awarded for top plays during Summer 2026', earned: tracks.filter(t=>t.userId===currentUser?.id).reduce((s,t)=>s+(t.plays||0),0)>=10, rarity: 'Common', color: '#FF8C00' },
+    { id: 't2', name: 'Rainy Season Artist', emoji: '🌧️', type: 'Seasonal', desc: 'Released a track during rainy season', earned: true, rarity: 'Rare', color: '#4169E1' },
+    { id: 't3', name: 'New Year Anthem', emoji: '🎉', type: 'Seasonal', desc: 'Top played track on New Year', earned: false, rarity: 'Legendary', color: '#D4AF37' },
+    { id: 't4', name: 'Ramadan Special', emoji: '🌙', type: 'Seasonal', desc: 'Most liked track during Ramadan', earned: false, rarity: 'Epic', color: '#9B59B6' },
+    { id: 't5', name: 'Golden Microphone', emoji: '🎤', type: 'Digital', desc: 'For reaching 1,000 plays', earned: tracks.filter(t=>t.userId===currentUser?.id).reduce((s,t)=>s+(t.plays||0),0)>=1000, rarity: 'Common', color: '#D4AF37' },
+    { id: 't6', name: 'Diamond Headphones', emoji: '💎', type: 'Digital', desc: 'For 10,000 total plays', earned: false, rarity: 'Legendary', color: '#00F5FF' },
+    { id: 't7', name: 'Superfan Medal', emoji: '❤️', type: 'Fan Medal', desc: 'Liked 100+ tracks', earned: likedTracks.length >= 100, rarity: 'Common', color: '#FF1493' },
+    { id: 't8', name: 'Ultra Fan Medal', emoji: '🏅', type: 'Fan Medal', desc: 'Followed 20+ artists', earned: (currentUser?.following||0) >= 20, rarity: 'Rare', color: '#FF6347' },
+    { id: 't9', name: 'Creator Bronze', emoji: '🥉', type: 'Creator Medal', desc: 'First track reached 100 plays', earned: tracks.filter(t=>t.userId===currentUser?.id).some(t=>(t.plays||0)>=100), rarity: 'Common', color: '#CD7F32' },
+    { id: 't10', name: 'Creator Silver', emoji: '🥈', type: 'Creator Medal', desc: 'First track reached 1,000 plays', earned: false, rarity: 'Rare', color: '#9CA3AF' },
+    { id: 't11', name: 'Creator Gold', emoji: '🥇', type: 'Creator Medal', desc: 'First track reached 10,000 plays', earned: false, rarity: 'Epic', color: '#D4AF37' },
+    { id: 't12', name: '???', emoji: '🔮', type: 'Hidden Badge', desc: 'Secret badge — keep exploring!', earned: false, rarity: 'Legendary', hidden: true, color: '#6C63FF' },
+    { id: 't13', name: '???', emoji: '👻', type: 'Hidden Badge', desc: 'Only the most dedicated fans unlock this', earned: false, rarity: 'Legendary', hidden: true, color: '#FF1493' },
+    { id: 't14', name: 'Night Owl', emoji: '🦉', type: 'Hidden Badge', desc: 'Discovered at midnight', earned: new Date().getHours() >= 23 || new Date().getHours() < 4, rarity: 'Rare', hidden: true, color: '#191970' },
+  ];
+  const earned = allTrophies.filter(t => t.earned);
+  return `
+  <div style="font-size:18px;font-weight:800;margin-bottom:6px">🏆 Trophies, Medals & Badges</div>
+  <div style="font-size:13px;color:var(--t3);margin-bottom:16px">${earned.length} of ${allTrophies.length} earned · Collect them all!</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    ${['All','Seasonal','Digital','Fan Medal','Creator Medal','Hidden Badge'].map((t,i) => `<button class="chip ${i===0?'active':''}">${t}</button>`).join('')}
+  </div>
+  ${['Seasonal', 'Digital', 'Fan Medal', 'Creator Medal', 'Hidden Badge'].map(type => {
+    const group = allTrophies.filter(t => t.type === type);
+    const rarityColor = { Common: '#78716C', Rare: '#06B6D4', Epic: '#9333EA', Legendary: '#D4AF37' };
+    return `<div style="margin-bottom:16px">
+      <div class="sec-hdr"><div class="sec-title">${type === 'Seasonal' ? '🌟 ' : type === 'Digital' ? '💻 ' : type === 'Fan Medal' ? '❤️ ' : type === 'Creator Medal' ? '🎤 ' : '🔮 '}${type}s</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px">
+        ${group.map(t => `
+        <div style="background:${t.earned ? t.color + '20' : 'var(--s2)'};border:1px solid ${t.earned ? t.color + '55' : 'var(--border)'};border-radius:14px;padding:14px;text-align:center;opacity:${t.earned ? 1 : 0.45};cursor:pointer" onclick="toast('${t.earned ? t.name + ' — You earned this! 🎉' : 'Keep going to unlock this!'}','${t.earned ? 'success' : 'info'}')">
+          <div style="font-size:28px;margin-bottom:6px">${t.emoji}</div>
+          <div style="font-size:11px;font-weight:800;color:${t.earned ? t.color : 'var(--t3)'};margin-bottom:3px">${t.hidden && !t.earned ? '???' : t.name}</div>
+          <div style="font-size:9px;color:${rarityColor[t.rarity]||'var(--t3)'};font-weight:700;margin-bottom:4px">${t.rarity}</div>
+          <div style="font-size:8px;color:var(--t3);line-height:1.3">${t.hidden && !t.earned ? 'Secret — keep exploring' : t.desc}</div>
+          ${t.earned ? `<div style="margin-top:6px;font-size:9px;color:${t.color};font-weight:700">✓ Earned!</div>` : ''}
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('')}`;
+}
 
 // ===== INIT =====
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
